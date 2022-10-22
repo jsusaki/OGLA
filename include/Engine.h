@@ -12,7 +12,7 @@ public:
 	Engine();
 
 public:
-	bool Init(std::string title, int w, int h);
+	bool Init(std::string title, int w, int h, bool fullscreen = false, bool vsync = false);
 	bool Start();
 	bool ShutDown();
 
@@ -23,7 +23,6 @@ public:
 
 private:
 	bool m_bRunning;
-	bool bFullScreen; // not implemented yet
 	std::unique_ptr<Renderer> m_renderer;
 	std::unique_ptr<Input> m_input;
 

@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <map>
+#include <array>
+
 #include <GLFW/glfw3.h>
 
 #include "Common.h"
@@ -26,7 +28,7 @@ namespace Mouse
 	constexpr int32_t LEFT = 0;
 	constexpr int32_t RIGHT = 1;
 	constexpr int32_t MIDDLE = 2;
-}
+};
 
 struct KeyState
 {
@@ -66,6 +68,7 @@ public:
 	void UpdateMouseDelta(double dx, double dy);
 	void UpdateMouseWheel(int32_t delta); // not implemented yet
 	void UpdateMouse();
+
 	// Callback Functions
 	void GLFW_SetKeyboardCallback(GLFWwindow* window);
 	void GLFW_SetMouseCursorCallback(GLFWwindow* window);
@@ -73,24 +76,24 @@ public:
 	void GLFW_SetMouseScrollCallBack(GLFWwindow* window);
 
 	// public for now...
-	bool bHasInputFocus = false;
-	bool bHasMouseFocus = false;
-	vd2	m_vMousePos = { 0.0f, 0.0f };
-	vd2	m_vMousePosCache = { 0.0f, 0.0f };
-	vd2	m_vMouseDelta = { 0.0f, 0.0f };
-	vd2 m_vMouseWindowPos = { 0.0f, 0.0f };
-	int32_t m_nMouseWheelDelta = 0;
-	int32_t m_nMouseWheelDeltaCache = 0;
+	bool bHasInputFocus;
+	bool bHasMouseFocus;
+	vd2	m_vMousePos;
+	vd2	m_vMousePosCache;
+	vd2	m_vMouseDelta;
+	vd2 m_vMouseWindowPos;
+	int32_t m_nMouseWheelDelta;
+	int32_t m_nMouseWheelDeltaCache;
 
 private:
 	// Key code state map
 	std::map<size_t, uint8_t> m_keys;
 	// Keyboard State
-	bool m_KeyNewState[256] = { 0 };
-	bool m_KeyOldState[256] = { 0 };
-	KeyState m_KeyboardState[256] = { 0 };
+	std::array<bool, 256> m_KeyNewState;
+	std::array<bool, 256> m_KeyOldState;
+	std::array<KeyState, 256> m_KeyboardState;
 	// Mouse State
-	bool m_MouseNewState[5] = { 0 };
-	bool m_MouseOldState[5] = { 0 };
-	KeyState m_MouseState[5] = { 0 };
+	std::array<bool, 5> m_MouseNewState;
+	std::array<bool, 5> m_MouseOldState;
+	std::array<KeyState, 5> m_MouseState;
 };

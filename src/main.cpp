@@ -1,5 +1,5 @@
 /*
-	OpenGL Abstraction
+	OGLA: OpenGL Abstraction
 	
 	OpenGL Renderer	
 		Render Context
@@ -29,27 +29,33 @@
 				Cube
 
 	TODO:
-        Cross-platform Bulding System with CMake
 		Layer Abstraction
 		Vertex Buffer Abstraction
+		Vertex Array Abstraction
+		Mesh Abstraction
+		Shape Abstraction
+			Cube
+
 		Texture Abstraction
 		Material Abstraction
 		Light Abstraction
 		Camera Abstraction
 		Shader Abstraction
-		Shape Abstraction
-			Cube 
+
 		Cube Rendering
 		Cube Rendering Framework (Voxel Rendering)
 
 	Useful Resouces:
+	Voxel Engine Related
 		Voxel Engine Tutorial: https://sites.google.com/site/letsmakeavoxelengine/
-		Learn OpenGL: https://learnopengl.com/
-		OpenGL Tutorial: http://www.opengl-tutorial.org/
 		Minecraft-Like Engines: https://0fps.net/2012/01/14/an-analysis-of-minecraft-like-engines/
 		High Performance Voxel Engine: https://nickmcd.me/2021/04/04/high-performance-voxel-engine/
 		JDH Minecraft Weekend: https://github.com/jdah/minecraft-weekend
+	Engine Architecture
 		OLC Pixel Game Engine: https://github.com/OneLoneCoder/olcPixelGameEngine
+	OpenGL Fundamental and Abstraction
+		Learn OpenGL: https://learnopengl.com/
+		OpenGL Tutorial: http://www.opengl-tutorial.org/
 		Open.GL: https://open.gl/
 		OOGL: https://github.com/Overv/OOGL
 */
@@ -59,7 +65,7 @@
 int main()
 {
 	Engine engine;
-	if (engine.Init("OpenGL Abstraction", 800, 600))
+	if (engine.Init("OGLA: OpenGL Abstraction", 800, 600))
 		engine.Start();
 	return 0;
 }

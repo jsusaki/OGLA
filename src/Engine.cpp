@@ -5,12 +5,10 @@ Engine::Engine()
 
 }
 
-bool Engine::Init(std::string title, int w, int h)
+bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 {
-	bFullScreen = false;
-	
 	// Construct renderer
-	m_renderer = std::make_unique<Renderer>(title, w, h);
+	m_renderer = std::make_unique<Renderer>(title, w, h, fullscreen, vsync);
 
 	// Construct input and set callback function
 	m_input = std::make_unique<Input>();
@@ -42,11 +40,11 @@ bool Engine::Start()
 		std::chrono::duration<float> elapsedTime = m_t2 - m_t1;
 		m_t1 = m_t2;
 
-		// elapsed time
+		// Elapsed time
 		float fElapsedTime = elapsedTime.count();
 
-		fAccumulator += fDeltaTime;
 		// Update Game Logic
+		fAccumulator += fDeltaTime;
 		while (fAccumulator >= fDeltaTime)
 		{
 			ProcessInput();
@@ -80,29 +78,38 @@ bool Engine::ShutDown()
 void Engine::ProcessInput()
 {
 	m_input->HandleEvent();
+
+	// Keyboard Input
 	if (m_input->GetKey(Key::ESCAPE).pressed)
 	{
 		m_renderer->Close();
-		//m_bRunning = false;
 	}
+	if (m_input->GetKey(Key::F).pressed)
+	{	
+		m_renderer->ToggleFullScreen();
+	}
+
+	// Mouse Input
 	if (m_input->GetMouse(0).pressed)
 	{
-		std::cout << "Mouse Pressed\n";
-
+		//std::cout << "Mouse Pressed\n";
 	}
 	if (m_input->GetMouse(0).released)
 	{
-		std::cout << "Mouse Released\n";
+		//std::cout << "Mouse Released\n";
+	}
+	if (m_input->GetMouseWheel() > 0)
+	{
+		//std::cout << "Mouse Wheel up " << m_input->GetMouseWheel() << "\n";
+	}
+	else if (m_input->GetMouseWheel() < 0)
+	{
+		//std::cout << "Mouse Wheel down " << m_input->GetMouseWheel() << "\n";
 	}
 
 	//std::cout << "Mouse Pos " << m_input->GetMousePos().x << "," << m_input->GetMousePos().y << "\n";
 	//std::cout << "Mouse Pos Delta" << m_input->GetMouseDelta().x << "," << m_input->GetMouseDelta().y << "\n";
-
-	if (m_input->GetMouseWheel() > 0)
-		std::cout << "Mouse Wheel up " << m_input->GetMouseWheel() << "\n";
-	else if (m_input->GetMouseWheel() < 0)
-		std::cout << "Mouse Wheel down " << m_input->GetMouseWheel() << "\n";
-}
+}	
 
 void Engine::Update(float fElapsedTime)
 {

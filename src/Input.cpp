@@ -2,7 +2,7 @@
 
 Input::Input()
 {
-	// Key Maps
+	// Map Keys
 	m_keys[GLFW_KEY_UNKNOWN] = Key::NONE;
 	m_keys[GLFW_KEY_A] = Key::A; m_keys[GLFW_KEY_B] = Key::B; m_keys[GLFW_KEY_C] = Key::C; m_keys[GLFW_KEY_D] = Key::D; m_keys[GLFW_KEY_E] = Key::E; 
 	m_keys[GLFW_KEY_F] = Key::F; m_keys[GLFW_KEY_G] = Key::G; m_keys[GLFW_KEY_H] = Key::H; m_keys[GLFW_KEY_I] = Key::I; m_keys[GLFW_KEY_J] = Key::J; 
@@ -30,6 +30,22 @@ Input::Input()
 	m_keys[GLFW_KEY_KP_MULTIPLY] = Key::NP_MUL;  m_keys[GLFW_KEY_KP_DIVIDE] = Key::NP_DIV; m_keys[GLFW_KEY_KP_SUBTRACT] = Key::NP_SUB; m_keys[GLFW_KEY_KP_ADD] = Key::NP_ADD;
 
 	m_keys[GLFW_KEY_CAPS_LOCK] = Key::CAPS_LOCK;
+
+	bHasInputFocus = false;
+	bHasMouseFocus = false;
+	m_vMousePos = { 0.0f, 0.0f };
+	m_vMousePosCache = { 0.0f, 0.0f };
+	m_vMouseDelta = { 0.0f, 0.0f };
+	m_vMouseWindowPos = { 0.0f, 0.0f };
+	m_nMouseWheelDelta = 0;
+	m_nMouseWheelDeltaCache = 0;
+
+	m_KeyNewState = { 0 };
+	m_KeyOldState = { 0 };
+	m_KeyboardState = { 0 };
+	m_MouseNewState = { 0 };
+	m_MouseOldState = { 0 };
+	m_MouseState = { 0 };
 }
 
 void Input::HandleEvent()
@@ -37,7 +53,7 @@ void Input::HandleEvent()
 	glfwPollEvents();
 	UpdateKeyboard();
 	UpdateMouse();
-	// Cache to remain consistent between frames
+	// store to remain consistent between frames
 	m_vMousePos = m_vMousePosCache;
 	m_nMouseWheelDelta = m_nMouseWheelDeltaCache;
 	m_nMouseWheelDeltaCache = 0;
@@ -171,10 +187,7 @@ void Input::UpdateKeyFocus(bool state)
 	bHasInputFocus = state;
 }
 
-
-
 // Callback Functions
-// move the callback set fuction to renderer, then pass only the callback function?
 void Input::GLFW_SetKeyboardCallback(GLFWwindow* window)
 {
 	glfwSetWindowUserPointer(window, this);
