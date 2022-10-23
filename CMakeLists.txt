@@ -27,7 +27,7 @@ include_directories(
 file(GLOB LIBRARY_SOURCES lib/glad/src/glad.c)
 file(GLOB PROJECT_HEADERS include/*.h)
 file(GLOB PROJECT_SOURCES src/*.cpp)
-file(GLOB PROJECT_SHADERS res/shader/*.frag res/shader/*.vert)
+file(GLOB PROJECT_SHADERS res/shader/*.fs res/shader/*.vs)
 
 file(GLOB PROJECT_CONFIGS 
     CMakeLists.txt
