@@ -2,9 +2,9 @@
 
 OpenGL Abstraction
 - Input
-    - Event
-    - Keyboard
-    - Mouse
+    - Event Handling
+        - Keyboard
+        - Mouse
 - Renderer
     - Window
     - Frame Time
@@ -12,8 +12,10 @@ OpenGL Abstraction
 ### Development
 Abstraction Currently Work In Progress
 - Layer
-- Shader
 - Vertex Buffer
+- Vertex Array
+- Mesh
+- Shader
 - Texture
 - Material
 - Light
@@ -25,7 +27,7 @@ Abstraction Currently Work In Progress
 
 After 
 ```
-git clone
+git clone --recursive 
 ```
 
 #### Linux
@@ -34,8 +36,7 @@ mkdir build
 cd scripts
 ./config.sh
 ./build.sh
-cd ../build
-./OpenGLCore
+./run.sh
 ```
 
 ### Dependency
