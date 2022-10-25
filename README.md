@@ -26,7 +26,7 @@ Abstraction Currently Work In Progress
 
 After 
 ```
-git clone --recursive 
+git clone --recursive https://github.com/jsusaki/OpenGLCore.git
 ```
 
 #### Linux
