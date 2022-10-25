@@ -5,7 +5,7 @@ Shader::Shader()
 
 }
 
-Shader::Shader(std::string& vertex_path, std::string& fragment_path)
+Shader::Shader(const std::string& vertex_path, const std::string& fragment_path)
 {
     m_ProgramID = glCreateProgram();
 
@@ -47,7 +47,7 @@ u32 Shader::GetID()
     return m_ProgramID;
 }
 
-std::string Shader::LoadFromFile(std::string& filepath)
+std::string Shader::LoadFromFile(const std::string& filepath)
 {
     std::string data;
     std::ifstream file(filepath, std::ios::in | std::ios::binary);
@@ -103,12 +103,12 @@ void Shader::Link()
         int maxLength = 0;
         glGetProgramiv(m_ProgramID, GL_INFO_LOG_LENGTH, &maxLength);
        
-        std::vector<char> errorLog(maxLength);
-        glGetProgramInfoLog(m_ProgramID, maxLength, &maxLength, &errorLog[0]);
+        std::vector<char> vErrorLog(maxLength);
+        glGetProgramInfoLog(m_ProgramID, maxLength, &maxLength, &vErrorLog[0]);
         
         glDeleteProgram(m_ProgramID);
         
-        std::printf("%s\n", &(errorLog[0]));
+        std::printf("%s\n", &(vErrorLog[0]));
     }
 }
 

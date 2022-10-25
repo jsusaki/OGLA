@@ -33,7 +33,7 @@ class Shader
 {
 public:
 	Shader();
-	Shader(std::string& vertex_path, std::string& fragment_path);
+	Shader(const std::string& vertex_path, const std::string& fragment_path);
 	~Shader();
 
 public:
@@ -42,7 +42,7 @@ public:
 	u32 GetID();
 
 public:
-	std::string LoadFromFile(std::string& filepath);
+	std::string LoadFromFile(const std::string& filepath);
 	u32 Compile(ShaderType type, std::string& source);
 	void Attach(u32& shader);
 	void Link();
