@@ -2,11 +2,9 @@
 
 OpenGL Core Abstraction
 - Input
-    - Event Handling
-        - Keyboard
-        - Mouse
-- Renderer
-    - Window
+    - Keyboard
+    - Mouse
+- Window
     - Frame Time
 
 ### Development
@@ -15,12 +13,12 @@ Abstraction Currently Work In Progress
 - Vertex Buffer
 - Vertex Array
 - Buffer Layout
-- Mesh
 - Shader
 - Texture
+- Mesh
+- Camera
 - Material
 - Light
-- Camera
 - 3D Shape
 - Font
 
