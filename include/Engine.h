@@ -5,6 +5,7 @@
 
 #include "Window.h"
 #include "Input.h"
+#include "Shader.h"
 
 class Engine
 {
@@ -33,4 +34,7 @@ private:
 	float fFrameTimer;
 	float fAccumulator;
 	float fDeltaTime;
+
+	// Test Shader
+	std::unique_ptr<Shader> m_shader;
 };

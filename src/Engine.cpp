@@ -28,6 +28,9 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 
 	m_bRunning = true;
 
+	// Test Shader
+	m_shader = std::make_unique<Shader>("./res/shaders/shader.vs", "./res/shaders/shader.fs");
+
 	return true;
 }
 
@@ -114,16 +117,49 @@ void Engine::ProcessInput()
 void Engine::Update(float fElapsedTime)
 {
 	// Game Logic
-
-
-
 }
 
 void Engine::Render()
 {
 	m_window->ClearBuffer();
-	
+
+
+
 	// Draw
+	// ========================================================================
+
+	m_shader->Use();
+
+	float vertices[] = {
+		// positions         // colors
+		 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
+		-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
+		 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top 
+	};
+
+	// TODO: Abstract VBO, VAO, EBO, Buffer Layout
+	unsigned int VBO, VAO;
+	// Generate Vertex Array and Buffer
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	// Bind Vertex Array Object
+	glBindVertexArray(VAO);
+	// Bind and set Vertex Buffer Object
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	// Configure vertex attributes
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	// color attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// Render Triangle
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+
+	// ========================================================================
+
+
 
 	m_window->PrepareDrawing();
 	m_window->DisplayFrame();
