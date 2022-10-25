@@ -66,24 +66,14 @@ public:
 	void UpdateMouseState(int32_t button, bool state);
 	void UpdateMousePos(double x, double y);
 	void UpdateMouseDelta(double dx, double dy);
-	void UpdateMouseWheel(int32_t delta); // not implemented yet
+	void UpdateMouseWheel(int32_t delta);
 	void UpdateMouse();
 
-	// Callback Functions
+	// Input Callback Functions
 	void GLFW_SetKeyboardCallback(GLFWwindow* window);
 	void GLFW_SetMouseCursorCallback(GLFWwindow* window);
 	void GLFW_SetMouseButtonCallback(GLFWwindow* window);
 	void GLFW_SetMouseScrollCallBack(GLFWwindow* window);
-
-	// public for now...
-	bool bHasInputFocus;
-	bool bHasMouseFocus;
-	vd2	m_vMousePos;
-	vd2	m_vMousePosCache;
-	vd2	m_vMouseDelta;
-	vd2 m_vMouseWindowPos;
-	int32_t m_nMouseWheelDelta;
-	int32_t m_nMouseWheelDeltaCache;
 
 private:
 	// Key code state map
@@ -96,4 +86,13 @@ private:
 	std::array<bool, 5> m_MouseNewState;
 	std::array<bool, 5> m_MouseOldState;
 	std::array<KeyState, 5> m_MouseState;
+
+	bool bHasInputFocus;
+	bool bHasMouseFocus;
+	vd2	m_vMousePos;
+	vd2	m_vMousePosCache;
+	vd2	m_vMouseDelta;
+	vd2 m_vMouseWindowPos;
+	int32_t m_nMouseWheelDelta;
+	int32_t m_nMouseWheelDeltaCache;
 };

@@ -3,7 +3,7 @@
 #include <chrono>
 #include <memory>
 
-#include "Renderer.h"
+#include "Window.h"
 #include "Input.h"
 
 class Engine
@@ -14,7 +14,7 @@ public:
 public:
 	bool Init(std::string title, int w, int h, bool fullscreen = false, bool vsync = false);
 	bool Start();
-	bool ShutDown();
+	bool Shutdown();
 
 public:
 	void ProcessInput();
@@ -23,7 +23,7 @@ public:
 
 private:
 	bool m_bRunning;
-	std::unique_ptr<Renderer> m_renderer;
+	std::unique_ptr<Window> m_window;
 	std::unique_ptr<Input> m_input;
 
 	std::chrono::time_point<std::chrono::system_clock> m_t1;

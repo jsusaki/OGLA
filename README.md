@@ -1,6 +1,6 @@
-# OpenGLCore
+# OpenGL Core
 
-OpenGL Abstraction
+OpenGL Core Abstraction
 - Input
     - Event Handling
         - Keyboard
@@ -14,6 +14,7 @@ Abstraction Currently Work In Progress
 - Layer
 - Vertex Buffer
 - Vertex Array
+- Buffer Layout
 - Mesh
 - Shader
 - Texture

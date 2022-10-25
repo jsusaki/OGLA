@@ -252,7 +252,7 @@ void Input::GLFW_SetMouseScrollCallBack(GLFWwindow* window)
 	glfwSetScrollCallback(window, [](GLFWwindow* window, double dx, double dy)
 	{
 		Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
-		for (int i = 0; i < abs(dy); i++)
+		for (int i = 0; i < std::abs(dy); i++)
 		{
 			if (dy > 0)
 			{

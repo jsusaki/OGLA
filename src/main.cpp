@@ -10,7 +10,10 @@
 					Keyboard Input
 					Mouse Input
 				Layer Abstraction
+					Layer vector
+						Layer[0].Update()
 
+			Mesh Abstraction
 			Shader Abstraction
 			Texture Abstraction
 			Material Abstraction
@@ -32,6 +35,7 @@
 		Layer Abstraction
 		Vertex Buffer Abstraction
 		Vertex Array Abstraction
+		Shader Abstraction
 		Mesh Abstraction
 		Shape Abstraction
 			Cube
@@ -40,24 +44,27 @@
 		Material Abstraction
 		Light Abstraction
 		Camera Abstraction
-		Shader Abstraction
 
 		Cube Rendering
 		Cube Rendering Framework (Voxel Rendering)
 
-	Useful Resouces:
-	Voxel Engine Related
-		Voxel Engine Tutorial: https://sites.google.com/site/letsmakeavoxelengine/
-		Minecraft-Like Engines: https://0fps.net/2012/01/14/an-analysis-of-minecraft-like-engines/
-		High Performance Voxel Engine: https://nickmcd.me/2021/04/04/high-performance-voxel-engine/
-		JDH Minecraft Weekend: https://github.com/jdah/minecraft-weekend
-	Engine Architecture
-		OLC Pixel Game Engine: https://github.com/OneLoneCoder/olcPixelGameEngine
-	OpenGL Fundamental and Abstraction
-		Learn OpenGL: https://learnopengl.com/
-		OpenGL Tutorial: http://www.opengl-tutorial.org/
-		Open.GL: https://open.gl/
-		OOGL: https://github.com/Overv/OOGL
+		FURTHER ABSTRACT AWAY ENGINE and APPLICATION?
+			Code starts to clutter
+
+	Useful Resources:
+		Voxel Engine
+			Voxel Engine Tutorial: https://sites.google.com/site/letsmakeavoxelengine/
+			Minecraft-Like Engines: https://0fps.net/2012/01/14/an-analysis-of-minecraft-like-engines/
+			High Performance Voxel Engine: https://nickmcd.me/2021/04/04/high-performance-voxel-engine/
+			JDH Minecraft Weekend: https://github.com/jdah/minecraft-weekend
+		Engine Architecture
+			OLC Pixel Game Engine: https://github.com/OneLoneCoder/olcPixelGameEngine
+			Enjon: https://github.com/MrFrenik/Enjon
+		OpenGL Fundamental and Abstraction
+			Learn OpenGL: https://learnopengl.com/
+			OpenGL Tutorial: http://www.opengl-tutorial.org/
+			Open.GL: https://open.gl/
+			OOGL: https://github.com/Overv/OOGL
 */
 
 #include "Engine.h"

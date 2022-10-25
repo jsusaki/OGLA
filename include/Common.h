@@ -1,20 +1,25 @@
 #pragma once
 #include <cstdint>
 
+typedef uint8_t u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
+typedef uint64_t u64;
+
 struct pixel
 {
 	union
 	{
 		struct
 		{
-			uint8_t r;
-			uint8_t g;
-			uint8_t b;
-			uint8_t a;
+			u8 r;
+			u8 g;
+			u8 b;
+			u8 a;
 		};
 	};
 
-	pixel(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = 0xFF) : r(red), g(green), b(blue), a(alpha) {}
+	pixel(u8 red, u8 green, u8 blue, u8 alpha = 0xFF) : r(red), g(green), b(blue), a(alpha) {}
 };
 
 template <typename T>

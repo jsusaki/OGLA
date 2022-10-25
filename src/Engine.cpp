@@ -8,14 +8,14 @@ Engine::Engine()
 bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 {
 	// Construct renderer
-	m_renderer = std::make_unique<Renderer>(title, w, h, fullscreen, vsync);
+	m_window = std::make_unique<Window>(title, w, h, fullscreen, vsync);
 
 	// Construct input and set callback function
 	m_input = std::make_unique<Input>();
-	m_input->GLFW_SetKeyboardCallback(m_renderer->GetWindow());
-	m_input->GLFW_SetMouseCursorCallback(m_renderer->GetWindow());
-	m_input->GLFW_SetMouseButtonCallback(m_renderer->GetWindow());
-	m_input->GLFW_SetMouseScrollCallBack(m_renderer->GetWindow());
+	m_input->GLFW_SetKeyboardCallback(m_window->GetWindow());
+	m_input->GLFW_SetMouseCursorCallback(m_window->GetWindow());
+	m_input->GLFW_SetMouseButtonCallback(m_window->GetWindow());
+	m_input->GLFW_SetMouseScrollCallBack(m_window->GetWindow());
 
 	// Initialize timing
 	m_t1 = std::chrono::system_clock::now();
@@ -33,7 +33,7 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 
 bool Engine::Start()
 {
-	while (!m_renderer->ShouldClose())
+	while (!m_window->ShouldClose())
 	{
 		// Handle timing
 		m_t2 = std::chrono::system_clock::now();
@@ -70,7 +70,7 @@ bool Engine::Start()
 	return true;
 }
 
-bool Engine::ShutDown()
+bool Engine::Shutdown()
 {
 	return true;
 }
@@ -82,11 +82,11 @@ void Engine::ProcessInput()
 	// Keyboard Input
 	if (m_input->GetKey(Key::ESCAPE).pressed)
 	{
-		m_renderer->Close();
+		m_window->Close();
 	}
-	if (m_input->GetKey(Key::F).pressed)
+	if (m_input->GetKey(Key::F11).pressed)
 	{	
-		m_renderer->ToggleFullScreen();
+		m_window->ToggleFullScreen();
 	}
 
 	// Mouse Input
@@ -114,14 +114,17 @@ void Engine::ProcessInput()
 void Engine::Update(float fElapsedTime)
 {
 	// Game Logic
+
+
+
 }
 
 void Engine::Render()
 {
-	m_renderer->ClearBuffer();
+	m_window->ClearBuffer();
 	
 	// Draw
 
-	m_renderer->PrepareDrawing();
-	m_renderer->DisplayFrame();
+	m_window->PrepareDrawing();
+	m_window->DisplayFrame();
 }

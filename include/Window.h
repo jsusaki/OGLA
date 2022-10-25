@@ -7,11 +7,11 @@
 #include "Input.h"
 #include "Common.h"
 
-class Renderer
+class Window
 {
 public:
-	Renderer(std::string title, int w, int h, bool fullscreen, bool vsync);
-	~Renderer();
+	Window(std::string title, int w, int h, bool fullscreen, bool vsync);
+	~Window();
 
 public:
 	void Create(std::string title, int w, int h, bool fullscreen, bool vsync);
@@ -29,21 +29,21 @@ public:
 	GLFWwindow* GetWindow();
 	bool ShouldClose();
 	void ToggleFullScreen();
-
-	void GetPrimaryMonitor();
-	void SetVsync(bool vsync);
-	void SetFullScreen(bool fullscreen);
-	bool IsFullScreen();
+	void ToggleVsync();
 
 public:
-	// Callback Functions
-	void GLFW_SetFrameBufferSizeCallback();
+	void GetPrimaryMonitor();
+	void SetVsync(bool vsync);
+	bool IsVsync();
+	void SetFullScreen(bool fullscreen);
+	bool IsFullScreen();
 
 private:
 	// Internal Configurations
 	void GLFW_Init();
 	void GLFW_CreateWindow(std::string title, int w, int h, bool fullscreen, bool vsync);
 	void GLAD_Load();
+	void GLFW_SetFrameBufferSizeCallback();
 
 private:
 	GLFWwindow* m_window;

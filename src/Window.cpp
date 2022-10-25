@@ -1,17 +1,17 @@
-#include "Renderer.h"
+#include "Window.h"
 
-Renderer::Renderer(std::string title, int w, int h, bool fullscreen, bool vsync)
+Window::Window(std::string title, int w, int h, bool fullscreen, bool vsync)
 {
     Create(title, w, h, fullscreen, vsync);
 }
 
-Renderer::~Renderer()
+Window::~Window()
 {
     glfwDestroyWindow(m_window);
     glfwTerminate();
 }
 
-void Renderer::Create(std::string title, int w, int h, bool fullscreen, bool vsync)
+void Window::Create(std::string title, int w, int h, bool fullscreen, bool vsync)
 {
     p.m_size = { w , h };
     p.m_pos = { 0, 0 };
@@ -31,19 +31,19 @@ void Renderer::Create(std::string title, int w, int h, bool fullscreen, bool vsy
     PrepareDrawing();
 }
 
-void Renderer::UpdateViewport(const vi2& m_pos, const vi2& m_size)
+void Window::UpdateViewport(const vi2& m_pos, const vi2& m_size)
 {
     glViewport(m_pos.x, m_pos.y, m_size.x, m_size.y);
 }
 
-void Renderer::ClearBuffer(pixel p, bool depth)
+void Window::ClearBuffer(pixel p, bool depth)
 {
     glClearColor(float(p.r) / 255.0f, float(p.g) / 255.0f, float(p.b) / 255.0f, float(p.a) / 255.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     if (depth) glClear(GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::PrepareDrawing(bool depth, bool cullface)
+void Window::PrepareDrawing(bool depth, bool cullface)
 {
     if (depth)
     {
@@ -61,60 +61,65 @@ void Renderer::PrepareDrawing(bool depth, bool cullface)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void Renderer::DisplayFrame()
+void Window::DisplayFrame()
 {
     glfwSwapBuffers(m_window);
 }
 
-int Renderer::Width()
+int Window::Width()
 {
     return p.m_size.x;
 }
 
-int Renderer::Height()
+int Window::Height()
 {
     return p.m_size.y;
 }
 
-GLFWwindow* Renderer::GetWindow()
+GLFWwindow* Window::GetWindow()
 {
     return m_window;
 }
 
-void Renderer::Close()
+void Window::Close()
 {
     glfwSetWindowShouldClose(m_window, true);
 }
 
-bool Renderer::ShouldClose()
+bool Window::ShouldClose()
 {
     return glfwWindowShouldClose(m_window);
 }
 
-void Renderer::ToggleFullScreen()
+void Window::ToggleFullScreen()
 {
     SetFullScreen(!IsFullScreen());
 }
 
-void Renderer::GetPrimaryMonitor()
+void Window::ToggleVsync()
+{
+    //SetVsync(!IsVsync());
+}
+
+void Window::GetPrimaryMonitor()
 {
     m_monitor = glfwGetPrimaryMonitor();
 }
 
-void Renderer::SetVsync(bool vsync)
+void Window::SetVsync(bool vsync)
 {
     if (vsync)
         glfwSwapInterval(1);
     else 
-        glfwSwapInterval(0);
+        glfwSwapInterval(0); // Remove Framecap
 }
 
-bool Renderer::IsFullScreen()
+bool Window::IsVsync()
 {
-    return glfwGetWindowMonitor(m_window) != nullptr;
+    return p.m_vsync;
 }
 
-void Renderer::SetFullScreen(bool fullscreen)
+void Window::SetFullScreen(bool fullscreen)
 {
     if (IsFullScreen() == fullscreen)
         return;
@@ -136,7 +141,12 @@ void Renderer::SetFullScreen(bool fullscreen)
     }
 }
 
-void Renderer::GLFW_Init()
+bool Window::IsFullScreen()
+{
+    return glfwGetWindowMonitor(m_window) != nullptr;
+}
+
+void Window::GLFW_Init()
 {
     if (!glfwInit())
     {
@@ -154,7 +164,7 @@ void Renderer::GLFW_Init()
     printf("GLFW %i.%i.%i\n", GLFW_VERSION_MAJOR, GLFW_VERSION_MINOR, GLFW_VERSION_REVISION);
 }
 
-void Renderer::GLFW_CreateWindow(std::string title, int w, int h, bool fullscreen, bool vsync)
+void Window::GLFW_CreateWindow(std::string title, int w, int h, bool fullscreen, bool vsync)
 {
     p.m_vsync = vsync;
     p.m_fullscreen = fullscreen;
@@ -168,7 +178,7 @@ void Renderer::GLFW_CreateWindow(std::string title, int w, int h, bool fullscree
     glfwMakeContextCurrent(m_window);
 }
 
-void Renderer::GLAD_Load()
+void Window::GLAD_Load()
 {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -177,7 +187,7 @@ void Renderer::GLAD_Load()
     }
 }
 
-void Renderer::GLFW_SetFrameBufferSizeCallback()
+void Window::GLFW_SetFrameBufferSizeCallback()
 {
     glfwSetWindowUserPointer(m_window, &p);
     glfwSetFramebufferSizeCallback(m_window, [](GLFWwindow* window, int width, int height)
