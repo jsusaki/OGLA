@@ -29,7 +29,7 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 	m_bRunning = true;
 
 	// Test Shader
-	m_shader = std::make_unique<Shader>("./res/shaders/shader.vs", "./res/shaders/shader.fs");
+	m_shader = std::make_unique<Shader>("../../res/shaders/shader.vs", "../../res/shaders/shader.fs");
 
 	return true;
 }

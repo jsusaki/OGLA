@@ -27,7 +27,7 @@ include_directories(
 file(GLOB LIBRARY_SOURCES lib/glad/src/glad.c)
 file(GLOB PROJECT_HEADERS include/*.h)
 file(GLOB PROJECT_SOURCES src/*.cpp)
-file(GLOB PROJECT_SHADERS res/shader/*.fs res/shader/*.vs)
+file(GLOB PROJECT_SHADERS res/shaders/*.fs res/shaders/*.vs)
 
 file(GLOB PROJECT_CONFIGS 
     CMakeLists.txt
@@ -37,7 +37,7 @@ file(GLOB PROJECT_CONFIGS
 )
 
 source_group("include" FILES ${PROJECT_HEADERS})
-source_group("res/shader" FILES ${PROJECT_SHADERS})
+source_group("res/shaders" FILES ${PROJECT_SHADERS})
 source_group("lib" FILES ${LIBRARY_SOURCES})
 source_group("src" FILES ${PROJECT_SOURCES})
 
@@ -71,6 +71,6 @@ set_target_properties(
 
 add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/res/shader $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/res/shaders $<TARGET_FILE_DIR:${PROJECT_NAME}>
     DEPENDS ${PROJECT_SHADERS}
 )
