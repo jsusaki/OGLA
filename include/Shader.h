@@ -15,11 +15,10 @@
 #pragma once
 #include <string>
 #include <fstream>
-#include <sstream>
 #include <vector>
 #include <iostream>
 
-#include <GLAD/glad.h>
+#include <glad/glad.h>
 
 #include "Common.h"
 
@@ -41,6 +40,8 @@ public:
 	void Use();
 	void Unuse();
 	u32 GetID();
+	u32 GetAttribute(const std::string& name);
+	u32 GetUniform(const std::string& name);
 
 public:
 	std::string LoadFromFile(const std::string& filepath);

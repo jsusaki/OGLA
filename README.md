@@ -1,4 +1,4 @@
-# OpenGL Core
+# OpenGL Core Abstraction
 
 OpenGL Core Abstraction
 - Input
@@ -9,18 +9,19 @@ OpenGL Core Abstraction
 
 ### Development
 Abstraction Currently Work In Progress
-- Layer
-- Vertex Buffer
-- Vertex Array
-- Buffer Layout
-- Shader
-- Texture
-- Mesh
-- Camera
-- Material
-- Light
-- 3D Shape
-- Font
+- [x] Vertex
+- [x] Vertex Buffer
+- [x] Vertex Array
+- [] Buffer Layout
+- [x] Shader
+- [] Texture
+- [] Layer
+- [] Mesh
+- [] Camera
+- [] Material
+- [] Light
+- [] Primitive Geometry
+- [] Font
 
 ### Building
 
@@ -41,5 +42,6 @@ cd scripts
 ### Dependency
 - cmake
 - glfw
+- glad
 - glm
 - stb_image

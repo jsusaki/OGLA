@@ -49,3 +49,6 @@ _deps
 
 # VSCode
 .vscode/*
+
+# MACOS
+.DS_Store

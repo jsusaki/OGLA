@@ -47,6 +47,17 @@ u32 Shader::GetID()
     return m_ProgramID;
 }
 
+u32 Shader::GetAttribute(const std::string& name)
+{
+    return glGetAttribLocation(m_ProgramID, name.c_str());
+}
+
+u32 Shader::GetUniform(const std::string& name)
+{
+    return glGetUniformLocation(m_ProgramID, name.c_str());
+}
+
+
 std::string Shader::LoadFromFile(const std::string& filepath)
 {
     std::string data;

@@ -6,6 +6,11 @@
 #include "Window.h"
 #include "Input.h"
 #include "Shader.h"
+#include "Vertex.h"
+#include "VertexData.h"
+#include "VertexBuffer.h"
+#include "VertexArray.h"
+
 
 class Engine
 {
@@ -29,7 +34,7 @@ private:
 
 	std::chrono::time_point<std::chrono::system_clock> m_t1;
 	std::chrono::time_point<std::chrono::system_clock> m_t2;
-	uint32_t nLastFPS;
+	u32 nLastFPS;
 	int nFrameCount;
 	float fFrameTimer;
 	float fAccumulator;
@@ -37,4 +42,6 @@ private:
 
 	// Test Shader
 	std::unique_ptr<Shader> m_shader;
+	std::unique_ptr<VertexBuffer> vbo;
+	std::unique_ptr<VertexArray> vao;
 };
