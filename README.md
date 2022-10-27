@@ -19,7 +19,7 @@ Abstraction Currently Work In Progress
 - [ ] Mesh
 - [ ] Camera
 - [ ] Material
-- [  ] Light
+- [ ] Light
 - [ ] Primitive Geometry
 - [ ] Font
 
