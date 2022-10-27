@@ -12,16 +12,16 @@ Abstraction Currently Work In Progress
 - [x] Vertex
 - [x] Vertex Buffer
 - [x] Vertex Array
-- [] Buffer Layout
+- [x] Vertex Data
 - [x] Shader
-- [] Texture
-- [] Layer
-- [] Mesh
-- [] Camera
-- [] Material
-- [] Light
-- [] Primitive Geometry
-- [] Font
+- [ ] Texture
+- [ ] Layer
+- [ ] Mesh
+- [ ] Camera
+- [ ] Material
+- [  ] Light
+- [ ] Primitive Geometry
+- [ ] Font
 
 ### Building
 
