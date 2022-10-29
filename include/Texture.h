@@ -47,7 +47,7 @@ public:
 
 public:
 	u8* LoadFromFile(const std::string& filepath);
-	void Generate(u32 width, u32 height, const u8* data);
+	void Create(u32 width, u32 height, const u8* data, const bool filtered = true, const bool clamped = true);
 
 private:
 	u32 m_TextureID;
@@ -56,4 +56,7 @@ private:
 	u32 m_channel;
 	u8 m_bMipMap = true;
 	u8* m_buffer = nullptr;
+	s32 m_clamp;
+	s32 m_filter;
+	s32 m_format;
 };

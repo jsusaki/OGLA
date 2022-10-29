@@ -10,7 +10,7 @@ Texture::Texture(const std::string& filepath)
 {
     m_buffer = LoadFromFile(filepath);
 
-    Generate(m_width, m_height, m_buffer);
+    Create(m_width, m_height, m_buffer);
 
     stbi_image_free(m_buffer);
 }
@@ -35,36 +35,41 @@ u32 Texture::GetID()
     return m_TextureID;
 }
 
-void Texture::Generate(u32 width, u32 height, const u8* data)
+void Texture::Create(u32 width, u32 height, const u8* data, const bool filtered, const bool clamped)
 {    
     // Create Texture
     glGenTextures(1, &m_TextureID);
     glBindTexture(GL_TEXTURE_2D, m_TextureID);
 
     // Set Image Format
-    s32 format = 0;
     switch (m_channel)
     {
-    case 1: format = GL_ALPHA;     break;
-    case 2: format = GL_LUMINANCE; break;
-    case 3: format = GL_RGB;       break;
-    case 4: format = GL_RGBA;      break;
+    case 1: m_format = GL_ALPHA;     break;
+    case 2: m_format = GL_LUMINANCE; break;
+    case 3: m_format = GL_RGB;       break;
+    case 4: m_format = GL_RGBA;      break;
     }
     
-    // Make parameter reconfigurable
-    // Set Texture Wrap Parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // Set Texture Filtering Parameter
+    if (filtered) m_filter = GL_LINEAR;
+    else          m_filter = GL_NEAREST;
 
-    // Set Texture Filtering Parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // Set Texture Wrap Parameter
+    if (clamped) m_clamp = GL_CLAMP;
+    else         m_clamp = GL_REPEAT;
+
+    // Apply Texture Filtering Parameter
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_filter);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_filter);
+
+    // Apply Texture Wrap Parameter
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_clamp);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_clamp);
 
     // Generate Texture
-    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, m_format, width, height, 0, m_format, GL_UNSIGNED_BYTE, data);
 
-    if (m_bMipMap)
-        glGenerateMipmap(GL_TEXTURE_2D);
+    if (m_bMipMap) glGenerateMipmap(GL_TEXTURE_2D);
 
     // Unbind texture
     glBindTexture(GL_TEXTURE_2D, 0);
