@@ -47,23 +47,12 @@ u32 Shader::GetID()
     return m_ProgramID;
 }
 
-u32 Shader::GetAttribute(const std::string& name)
-{
-    return glGetAttribLocation(m_ProgramID, name.c_str());
-}
-
-u32 Shader::GetUniform(const std::string& name)
-{
-    return glGetUniformLocation(m_ProgramID, name.c_str());
-}
-
-
 std::string Shader::LoadFromFile(const std::string& filepath)
 {
     std::string data;
     std::ifstream file(filepath, std::ios::in | std::ios::binary);
     if (!file.is_open())
-        std::cout << "Could not open " << filepath;
+        std::cout << "Could not open " << filepath << "\n";
 
     std::copy(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>(), std::back_inserter(data));
     file.close();
@@ -131,4 +120,59 @@ void Shader::Detach(u32& shader)
 void Shader::Delete(u32& shader)
 {
     glDeleteShader(shader);
+}
+
+u32 Shader::GetAttribute(const std::string& name)
+{
+    return glGetAttribLocation(m_ProgramID, name.c_str());
+}
+
+u32 Shader::GetUniform(const std::string& name)
+{
+    return glGetUniformLocation(m_ProgramID, name.c_str());
+}
+
+void Shader::SetUniform(const std::string& name, const s32& val)
+{
+    glUniform1i(GetUniform(name), val);
+}
+
+void Shader::SetUniform(const std::string& name, f32* val, s32 count)
+{
+    glUniform1fv(GetUniform(name), count, val);
+}
+
+void Shader::SetUniform(const std::string& name, s32* val, s32 count)
+{
+    glUniform1iv(GetUniform(name), count, val);
+}
+
+void Shader::SetUniform(const std::string& name, const f64& val)
+{
+    glUniform1f(GetUniform(name), val);
+}
+
+void Shader::SetUniform(const std::string& name, const f32& val)
+{
+    glUniform1f(GetUniform(name), val);
+}
+
+void Shader::SetUniform(const std::string& name, const vf2& vector)
+{
+    glUniform2f(GetUniform(name), vector.x, vector.y);
+}
+
+void Shader::SetUniform(const std::string& name, const vf3& vector)
+{
+    glUniform3f(GetUniform(name), vector.x, vector.y, vector.z);
+}
+
+void Shader::SetUniform(const std::string& name, const vf4& vector)
+{
+    glUniform4f(GetUniform(name), vector.x, vector.y, vector.z, vector.w);
+}
+
+void Shader::SetUniform(const std::string& name, const mf4x4& matrix)
+{
+    glUniformMatrix4fv(GetUniform(name), 1, GL_FALSE, matrix.m[0]);
 }

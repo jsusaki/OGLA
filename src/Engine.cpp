@@ -1,3 +1,5 @@
+#define STB_IMAGE_IMPLEMENTATION
+
 #include "Engine.h"
 
 Engine::Engine()
@@ -7,7 +9,7 @@ Engine::Engine()
 
 bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 {
-	// Construct renderer
+	// Construct window
 	m_window = std::make_unique<Window>(title, w, h, fullscreen, vsync);
 
 	// Construct input and set callback function
@@ -31,26 +33,40 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 
 	// Test Shader
 	m_shader = std::make_unique<Shader>("../../res/shaders/shader.vs", "../../res/shaders/shader.fs");
+	m_texture1 = std::make_unique<Texture>("../../res/textures/container.jpg");
+	m_texture2 = std::make_unique<Texture>("../../res/textures/awesomeface.png");
 
 	// Construct Vertex Data Definition
 	VertexData def;
 	def.Add<vf3>(); // position
 	def.Add<vf4>(); // color
-	
+	def.Add<vf2>(); // texture
+
 	// Construct Vertices
+	// Rectangle
 	std::vector<Vertex> vertices = {
-		// position            // color
-		{{ 0.5f, -0.5f, 0.0f },{ 1.0f, 0.0f, 0.0f, 0.0f }},   // bottom right
-		{{-0.5f, -0.5f, 0.0f },{ 0.0f, 1.0f, 0.0f, 0.0f }},   // bottom left
-		{{ 0.0f,  0.5f, 0.0f },{ 0.0f, 0.0f, 1.0f, 0.0f }},   // top
+		{{ 0.5f, 0.5f, 0.0f },{ 1.0f, 0.0f, 0.0f, 0.0f },{1.0f, 1.0f}},   // top right
+		{{ 0.5f,-0.5f, 0.0f },{ 0.0f, 1.0f, 0.0f, 0.0f },{1.0f, 0.0f}},   // bottom right
+		{{-0.5f,-0.5f, 0.0f },{ 0.0f, 0.0f, 1.0f, 0.0f },{0.0f, 0.0f}},   // bottom left
+		{{-0.5f, 0.5f, 0.0f },{ 1.0f, 1.0f, 1.0f, 0.0f },{0.0f, 1.0f}},   // top left
 	};
 
-	// TODO: Abstract EBO, IBO
+	// Construct Indices
+	std::vector<u32> indices = {
+		0, 1, 3, // first triangle
+		1, 2, 3  // second triangle
+	};
+
 	vbo = std::make_unique<VertexBuffer>(vertices, STATIC_DRAW);
+	ibo = std::make_unique<IndexBuffer>(indices, STATIC_DRAW);
 	vao = std::make_unique<VertexArray>();
 
 	// Bind VBO and Vertex Data Definition for Vertex Atrributes
-	vao->Bind(*vbo, def);
+	vao->Bind(*vbo, *ibo, def);
+
+	m_shader->Use();
+	m_shader->SetUniform("texture1", 0);
+	m_shader->SetUniform("texture2", 1);
 
 	return true;
 }
@@ -61,11 +77,11 @@ bool Engine::Start()
 	{
 		// Handle timing
 		m_t2 = std::chrono::system_clock::now();
-		std::chrono::duration<float> elapsedTime = m_t2 - m_t1;
+		std::chrono::duration<f32> elapsedTime = m_t2 - m_t1;
 		m_t1 = m_t2;
 
 		// Elapsed time
-		float fElapsedTime = elapsedTime.count();
+		f32 fElapsedTime = elapsedTime.count();
 
 		// Update Game Logic
 		fAccumulator += fDeltaTime;
@@ -147,11 +163,15 @@ void Engine::Render()
 	// Draw
 	// ========================================================================
 
-	m_shader->Use();
+	// Renderer Functions
+	glActiveTexture(GL_TEXTURE0);
+	m_texture1->Bind();
+	glActiveTexture(GL_TEXTURE1);
+	m_texture2->Bind();
 
-	// Renderer Function: Render Triangle
+	m_shader->Use();
 	glBindVertexArray(vao->GetVAO());
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 	// ========================================================================
 

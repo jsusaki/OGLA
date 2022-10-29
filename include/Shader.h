@@ -11,8 +11,8 @@
 		Link   : link shader to program
 		Use    : use shader program
 */
-
 #pragma once
+
 #include <string>
 #include <fstream>
 #include <vector>
@@ -20,7 +20,8 @@
 
 #include <glad/glad.h>
 
-#include "Common.h"
+#include "Type.h"
+
 
 enum ShaderType
 {
@@ -40,8 +41,6 @@ public:
 	void Use();
 	void Unuse();
 	u32 GetID();
-	u32 GetAttribute(const std::string& name);
-	u32 GetUniform(const std::string& name);
 
 public:
 	std::string LoadFromFile(const std::string& filepath);
@@ -50,6 +49,19 @@ public:
 	void Link();
 	void Detach(u32& shader);
 	void Delete(u32& shader);
+
+public:
+	u32 GetAttribute(const std::string& name);
+	u32 GetUniform(const std::string& name);
+	void SetUniform(const std::string& name, const s32& val);
+	void SetUniform(const std::string& name, f32* val, s32 count);
+	void SetUniform(const std::string& name, s32* val, s32 count);
+	void SetUniform(const std::string& name, const f64& val);
+	void SetUniform(const std::string& name, const f32& val);
+	void SetUniform(const std::string& name, const vf2& vector);
+	void SetUniform(const std::string& name, const vf3& vector);
+	void SetUniform(const std::string& name, const vf4& vector);
+	void SetUniform(const std::string& name, const mf4x4& matrix);
 
 private:
 	u32 m_ProgramID;

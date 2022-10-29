@@ -14,9 +14,9 @@ Abstraction Currently Work In Progress
 - [x] Vertex Array
 - [x] Vertex Data
 - [x] Shader
-- [ ] Texture
-- [ ] Layer
+- [x] Texture
 - [ ] Mesh
+- [ ] Layer
 - [ ] Camera
 - [ ] Material
 - [ ] Light

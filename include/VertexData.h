@@ -7,9 +7,10 @@
 #include <glad/glad.h>
 #include <vector>
 
-#include "Common.h"
+#include "Type.h"
 #include "Vertex.h"
 
+// Do we need all this types?
 enum VertexAttributeType
 {
 	BYTE = GL_BYTE,
@@ -37,7 +38,6 @@ public:
 public:
 	template<typename T>
 	void Add() {}
-
 public:
 	u32 GetStride() const;
 	u32 GetOffset(const u32 index) const;
@@ -54,20 +54,20 @@ private:
 template<>
 inline void VertexData::Add<vf2>()
 {
-    m_attributes.push_back({ 2, FLOAT, sizeof(vf2) });
-    m_stride += sizeof(vf2);
+	m_attributes.push_back({ 2, FLOAT, sizeof(vf2) });
+	m_stride += sizeof(vf2);
 }
 
 template<>
 inline void VertexData::Add<vf3>()
 {
-    m_attributes.push_back({ 3, FLOAT, sizeof(vf3) });
-    m_stride += sizeof(vf3);
+	m_attributes.push_back({ 3, FLOAT, sizeof(vf3) });
+	m_stride += sizeof(vf3);
 }
 
 template<>
 inline void VertexData::Add<vf4>()
 {
-    m_attributes.push_back({ 4, FLOAT, sizeof(vf4) });
-    m_stride += sizeof(vf4);
+	m_attributes.push_back({ 4, FLOAT, sizeof(vf4) });
+	m_stride += sizeof(vf4);
 }

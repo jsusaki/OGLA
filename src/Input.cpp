@@ -65,23 +65,23 @@ KeyState Input::GetKey(Key k)
 	return m_KeyboardState[k];
 }
 
-uint8_t Input::GetKeyMap(int k)
+uint8_t Input::GetKeyMap(s32 k)
 {
 	return m_keys[k];
 }
 
 // Mouse 
-KeyState Input::GetMouse(int b)
+KeyState Input::GetMouse(s32 b)
 {
 	return m_MouseState[b];
 }
 
-int32_t Input::GetMouseX()
+s32 Input::GetMouseX()
 {
 	return m_vMousePos.x;
 }
 
-int32_t Input::GetMouseY()
+s32 Input::GetMouseY()
 {
 	return m_vMousePos.y;
 }
@@ -96,21 +96,21 @@ const vd2& Input::GetMouseDelta()
 	return m_vMouseDelta;
 }
 
-int32_t Input::GetMouseWheel()
+s32 Input::GetMouseWheel()
 {
 	return m_nMouseWheelDelta;
 }
 
 
 // Keyboard
-void Input::UpdateKeyState(int32_t key, bool state)
+void Input::UpdateKeyState(s32 key, bool state)
 {
 	m_KeyNewState[key] = state;
 }
 
 void Input::UpdateKeyboard()
 {
-	for (uint32_t i = 0; i < 256; i++)
+	for (u32 i = 0; i < 256; i++)
 	{
 		m_KeyboardState[i].pressed = false;
 		m_KeyboardState[i].released = false;
@@ -132,22 +132,22 @@ void Input::UpdateKeyboard()
 }
 
 // Mouse
-void Input::UpdateMouseState(int32_t button, bool state)
+void Input::UpdateMouseState(s32 button, bool state)
 {
 	m_MouseNewState[button] = state;
 }
 
-void Input::UpdateMouseWheel(int32_t delta)
+void Input::UpdateMouseWheel(s32 delta)
 {
 	m_nMouseWheelDeltaCache += delta;
 }
 
-void Input::UpdateMousePos(double x, double y)
+void Input::UpdateMousePos(f64 x, f64 y)
 {
 	m_vMousePosCache = { x, y };
 }
 
-void Input::UpdateMouseDelta(double dx, double dy)
+void Input::UpdateMouseDelta(f64 dx, f64 dy)
 {
 	m_vMouseDelta = { dx - m_vMousePosCache.x, m_vMousePosCache.y - dy };
 }
@@ -155,7 +155,7 @@ void Input::UpdateMouseDelta(double dx, double dy)
 
 void Input::UpdateMouse()
 {
-	for (uint32_t i = 0; i < 5; i++)
+	for (u32 i = 0; i < 5; i++)
 	{
 		m_MouseState[i].pressed = false;
 		m_MouseState[i].released = false;
@@ -191,7 +191,7 @@ void Input::UpdateKeyFocus(bool state)
 void Input::GLFW_SetKeyboardCallback(GLFWwindow* window)
 {
 	glfwSetWindowUserPointer(window, this);
-	glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mode)
+	glfwSetKeyCallback(window, [](GLFWwindow* window, s32 key, s32 scancode, s32 action, s32 mode)
 	{
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, false);
@@ -216,7 +216,7 @@ void Input::GLFW_SetKeyboardCallback(GLFWwindow* window)
 void Input::GLFW_SetMouseCursorCallback(GLFWwindow* window)
 {
 	glfwSetWindowUserPointer(window, this);
-	glfwSetCursorPosCallback(window, [](GLFWwindow* window, double dx, double dy)
+	glfwSetCursorPosCallback(window, [](GLFWwindow* window, f64 dx, f64 dy)
 	{
 		Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
 		input->UpdateMouseDelta(dx, dy);
@@ -227,7 +227,7 @@ void Input::GLFW_SetMouseCursorCallback(GLFWwindow* window)
 void Input::GLFW_SetMouseButtonCallback(GLFWwindow* window)
 {
 	glfwSetWindowUserPointer(window, this);
-	glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mode)
+	glfwSetMouseButtonCallback(window, [](GLFWwindow* window, s32 button, s32 action, s32 mode)
 	{
 		Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
 		switch (action)
@@ -249,10 +249,10 @@ void Input::GLFW_SetMouseButtonCallback(GLFWwindow* window)
 void Input::GLFW_SetMouseScrollCallBack(GLFWwindow* window)
 {
 	glfwSetWindowUserPointer(window, this);
-	glfwSetScrollCallback(window, [](GLFWwindow* window, double dx, double dy)
+	glfwSetScrollCallback(window, [](GLFWwindow* window, f64 dx, f64 dy)
 	{
 		Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
-		for (int i = 0; i < std::abs(dy); i++)
+		for (u32 i = 0; i < std::abs(dy); i++)
 		{
 			if (dy > 0)
 			{

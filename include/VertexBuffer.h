@@ -3,8 +3,9 @@
 #include <glad/glad.h>
 #include <vector>
 
-#include "Common.h"
+#include "Type.h"
 #include "Vertex.h"
+
 
 enum BufferType
 {

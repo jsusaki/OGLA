@@ -13,9 +13,12 @@
 					Layer vector
 						Layer[0].Update()
 
-			Mesh Abstraction
 			Shader Abstraction
+			Vertex Buffer Abstraction
+			Vertex Array Abstraction
+			Vertex Data Abstraction
 			Texture Abstraction
+			Mesh Abstraction
 			Material Abstraction
 			Light Abstraction
 				Specular Light
@@ -33,18 +36,12 @@
 
 	TODO:
 		Layer Abstraction
-		Vertex Buffer Abstraction
-		Vertex Array Abstraction
-		Shader Abstraction
 		Mesh Abstraction
 		Shape Abstraction
 			Cube
-
-		Texture Abstraction
+		Camera Abstraction
 		Material Abstraction
 		Light Abstraction
-		Camera Abstraction
-
 		Cube Rendering
 		Cube Rendering Framework (Voxel Rendering)
 
@@ -66,7 +63,6 @@
 			Open.GL: https://open.gl/
 			OOGL: https://github.com/Overv/OOGL
 */
-
 #include "Engine.h"
 
 int main()

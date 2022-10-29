@@ -1,11 +1,13 @@
 #pragma once
+
 #include <iostream>
 #include <map>
 #include <array>
 
 #include <GLFW/glfw3.h>
 
-#include "Common.h"
+#include "Type.h"
+
 
 enum Key
 {
@@ -25,10 +27,10 @@ enum Key
 
 namespace Mouse
 {
-	constexpr int32_t LEFT = 0;
-	constexpr int32_t RIGHT = 1;
-	constexpr int32_t MIDDLE = 2;
-};
+	constexpr s32 LEFT = 0;
+	constexpr s32 RIGHT = 1;
+	constexpr s32 MIDDLE = 2;
+}
 
 struct KeyState
 {
@@ -46,27 +48,27 @@ public:
 	void HandleEvent();
 	// Keyboard
 	KeyState GetKey(Key k);
-	uint8_t GetKeyMap(int k);
+	u8 GetKeyMap(s32 k);
 	// Mouse 
-	KeyState GetMouse(int b);
-	int32_t GetMouseX();
-	int32_t GetMouseY();
+	KeyState GetMouse(s32 b);
+	s32 GetMouseX();
+	s32 GetMouseY();
 	const vd2& GetMousePos();
 	const vd2& GetMouseDelta();
-	int32_t GetMouseWheel();
+	s32 GetMouseWheel();
 	// Focus
 	void UpdateMouseFocus(bool state);
 	void UpdateKeyFocus(bool state);
 
 public:
 	// Keyboard
-	void UpdateKeyState(int32_t key, bool state);
+	void UpdateKeyState(s32 key, bool state);
 	void UpdateKeyboard();
 	// Mouse
-	void UpdateMouseState(int32_t button, bool state);
-	void UpdateMousePos(double x, double y);
-	void UpdateMouseDelta(double dx, double dy);
-	void UpdateMouseWheel(int32_t delta);
+	void UpdateMouseState(s32 button, bool state);
+	void UpdateMousePos(f64 x, f64 y);
+	void UpdateMouseDelta(f64 dx, f64 dy);
+	void UpdateMouseWheel(s32 delta);
 	void UpdateMouse();
 
 	// Input Callback Functions
@@ -77,7 +79,7 @@ public:
 
 private:
 	// Key code state map
-	std::map<size_t, uint8_t> m_keys;
+	std::map<size_t, u8> m_keys;
 	// Keyboard State
 	std::array<bool, 256> m_KeyNewState;
 	std::array<bool, 256> m_KeyOldState;
@@ -93,6 +95,6 @@ private:
 	vd2	m_vMousePosCache;
 	vd2	m_vMouseDelta;
 	vd2 m_vMouseWindowPos;
-	int32_t m_nMouseWheelDelta;
-	int32_t m_nMouseWheelDeltaCache;
+	s32 m_nMouseWheelDelta;
+	s32 m_nMouseWheelDeltaCache;
 };

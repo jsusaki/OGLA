@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <chrono>
 #include <memory>
@@ -9,7 +10,9 @@
 #include "Vertex.h"
 #include "VertexData.h"
 #include "VertexBuffer.h"
+#include "IndexBuffer.h"
 #include "VertexArray.h"
+#include "Texture.h"
 
 
 class Engine
@@ -35,13 +38,16 @@ private:
 	std::chrono::time_point<std::chrono::system_clock> m_t1;
 	std::chrono::time_point<std::chrono::system_clock> m_t2;
 	u32 nLastFPS;
-	int nFrameCount;
-	float fFrameTimer;
-	float fAccumulator;
-	float fDeltaTime;
+	u32 nFrameCount;
+	f32 fFrameTimer;
+	f32 fAccumulator;
+	f32 fDeltaTime;
 
-	// Test Shader
-	std::unique_ptr<Shader> m_shader;
+	// Tests
 	std::unique_ptr<VertexBuffer> vbo;
+	std::unique_ptr<IndexBuffer> ibo;
 	std::unique_ptr<VertexArray> vao;
+	std::unique_ptr<Shader> m_shader;
+	std::unique_ptr<Texture> m_texture1;
+	std::unique_ptr<Texture> m_texture2;
 };

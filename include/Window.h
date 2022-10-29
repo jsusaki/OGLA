@@ -1,11 +1,13 @@
 #pragma once
+
 #include <string>
 
-#include <GLAD/glad.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "Type.h"
 #include "Input.h"
-#include "Common.h"
+
 
 class Window
 {
