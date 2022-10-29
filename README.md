@@ -11,6 +11,7 @@ OpenGL Core Abstraction
 Abstraction Currently Work In Progress
 - [x] Vertex
 - [x] Vertex Buffer
+- [x] Index Buffer
 - [x] Vertex Array
 - [x] Vertex Data
 - [x] Shader
