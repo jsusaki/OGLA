@@ -1,6 +1,6 @@
-# OpenGL Core Abstraction
+# OGLA: OpenGL Abstraction
 
-OpenGL Core Abstraction
+OpenGL Abstraction
 - Input
     - Keyboard
     - Mouse

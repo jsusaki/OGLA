@@ -24,7 +24,7 @@ include_directories(
     lib/stb/
 )
 
-file(GLOB LIBRARY_SOURCES lib/glad/src/glad.c)
+file(GLOB LIBRARY_SOURCES lib/glad/src/glad.c lib/stb/stb_image.cpp)
 file(GLOB PROJECT_HEADERS include/*.h)
 file(GLOB PROJECT_SOURCES src/*.cpp)
 file(GLOB PROJECT_SHADERS res/shaders/*.fs res/shaders/*.vs)
