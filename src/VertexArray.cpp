@@ -5,6 +5,18 @@ VertexArray::VertexArray()
 	glGenVertexArrays(1, &m_vao);
 }
 
+VertexArray::VertexArray(const VertexBuffer& vbo, const VertexData& def)
+{
+	glGenVertexArrays(1, &m_vao);
+	Bind(vbo, def);
+}
+
+VertexArray::VertexArray(const VertexBuffer& vbo, const IndexBuffer& ibo, const VertexData& def)
+{
+	glGenVertexArrays(1, &m_vao);
+	Bind(vbo, ibo, def);
+}
+
 VertexArray::~VertexArray()
 {
 	glDeleteBuffers(1, &m_vao);

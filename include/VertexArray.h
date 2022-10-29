@@ -11,6 +11,8 @@ class VertexArray
 {
 public:
 	VertexArray();
+	VertexArray(const VertexBuffer& vbo, const VertexData& def);
+	VertexArray(const VertexBuffer& vbo, const IndexBuffer& ibo, const VertexData& def);
 	~VertexArray();
 
 public:

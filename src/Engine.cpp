@@ -30,24 +30,24 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 
 
 	// Test Shader
-	m_shader = std::make_unique<Shader>("../../res/shaders/shader.vs", "../../res/shaders/shader.fs");
-	m_texture1 = std::make_unique<Texture>("../../res/textures/container.jpg");
-	m_texture2 = std::make_unique<Texture>("../../res/textures/awesomeface.png");
+	m_shader = std::make_unique<Shader>("./res/shaders/shader.vs.glsl", "./res/shaders/shader.fs.glsl");
+	m_texture1 = std::make_unique<Texture>("./res/textures/container.jpg");
+	m_texture2 = std::make_unique<Texture>("./res/textures/awesomeface.png");
+
+	// Construct Vertices
+	// Rectangle
+	std::vector<Vertex> vertices = {
+		{{ 0.5f, 0.5f, 0.0f },{ 1.0f, 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f }},   // top right
+		{{ 0.5f,-0.5f, 0.0f },{ 0.0f, 1.0f, 0.0f, 0.0f },{ 1.0f, 0.0f }},   // bottom right
+		{{-0.5f,-0.5f, 0.0f },{ 0.0f, 0.0f, 1.0f, 0.0f },{ 0.0f, 0.0f }},   // bottom left
+		{{-0.5f, 0.5f, 0.0f },{ 1.0f, 1.0f, 1.0f, 0.0f },{ 0.0f, 1.0f }},   // top left
+	};
 
 	// Construct Vertex Data Definition
 	VertexData def;
 	def.Add<vf3>(); // position
 	def.Add<vf4>(); // color
 	def.Add<vf2>(); // texture
-
-	// Construct Vertices
-	// Rectangle
-	std::vector<Vertex> vertices = {
-		{{ 0.5f, 0.5f, 0.0f },{ 1.0f, 0.0f, 0.0f, 0.0f },{1.0f, 1.0f}},   // top right
-		{{ 0.5f,-0.5f, 0.0f },{ 0.0f, 1.0f, 0.0f, 0.0f },{1.0f, 0.0f}},   // bottom right
-		{{-0.5f,-0.5f, 0.0f },{ 0.0f, 0.0f, 1.0f, 0.0f },{0.0f, 0.0f}},   // bottom left
-		{{-0.5f, 0.5f, 0.0f },{ 1.0f, 1.0f, 1.0f, 0.0f },{0.0f, 1.0f}},   // top left
-	};
 
 	// Construct Indices
 	std::vector<u32> indices = {
@@ -57,10 +57,7 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 
 	vbo = std::make_unique<VertexBuffer>(vertices, STATIC_DRAW);
 	ibo = std::make_unique<IndexBuffer>(indices, STATIC_DRAW);
-	vao = std::make_unique<VertexArray>();
-
-	// Bind VBO and Vertex Data Definition for Vertex Atrributes
-	vao->Bind(*vbo, *ibo, def);
+	vao = std::make_unique<VertexArray>(*vbo, *ibo, def);
 
 	m_shader->Use();
 	m_shader->SetUniform("texture1", 0);
