@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include <assimp/Importer.hpp>
 
 Engine::Engine()
 {

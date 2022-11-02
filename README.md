@@ -46,3 +46,4 @@ cd scripts
 - glad
 - glm
 - stb_image
+- assimp

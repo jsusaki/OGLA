@@ -7,6 +7,10 @@ option(GLFW_BUILD_EXAMPLES OFF)
 option(GLFW_BUILD_TESTS OFF)
 add_subdirectory(lib/glfw)
 
+option(ASSIMP_BUILD_SAMPLES OFF)
+option(ASSIMP_BUILD_TESTS OFF)
+add_subdirectory(lib/assimp)
+
 if (MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
 else()
@@ -20,6 +24,7 @@ include_directories(
     ./include
     lib/glad/include/
     lib/glfw/include/
+    lib/assimp/include/
     lib/glm/
     lib/stb/
 )
@@ -58,6 +63,7 @@ add_executable(
 target_link_libraries(
     ${PROJECT_NAME} 
     glfw
+    assimp
     ${GLFW_LIBRARIES} 
     ${GLAD_LIBRARIES}
 )
