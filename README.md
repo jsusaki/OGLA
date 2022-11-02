@@ -27,7 +27,7 @@ Abstraction Currently Work In Progress
 
 ### Building
 ```
-git clone --recursive https://github.com/jsusaki/OpenGLCore.git
+git clone --recursive https://github.com/jsusaki/OGLA.git
 ```
 
 #### Linux
