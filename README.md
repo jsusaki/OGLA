@@ -16,17 +16,16 @@ Abstraction Currently Work In Progress
 - [x] Vertex Data
 - [x] Shader
 - [x] Texture
-- [ ] Mesh
-- [ ] Layer
+- [x] Mesh
+- [ ] Model
+- [ ] Primitive Geometry
 - [ ] Camera
+- [ ] Layer
 - [ ] Material
 - [ ] Light
-- [ ] Primitive Geometry
 - [ ] Font
 
 ### Building
-
-After 
 ```
 git clone --recursive https://github.com/jsusaki/OpenGLCore.git
 ```
