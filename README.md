@@ -17,7 +17,7 @@ Abstraction Currently Work In Progress
 - [x] Shader
 - [x] Texture
 - [x] Mesh
-- [ ] Model
+- [x] Model
 - [ ] Primitive Geometry
 - [ ] Camera
 - [ ] Layer

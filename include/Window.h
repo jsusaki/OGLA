@@ -20,6 +20,7 @@ public:
 	void Close();
 
 public:
+	// TODO: Separte into Renderer Class
 	void UpdateViewport(const vi2& m_pos, const vi2& m_size);
 	void ClearBuffer(pixel p = { 0, 0, 0 }, bool depth = true);
 	void PrepareDrawing(bool depth = true, bool cullface = false);
@@ -58,7 +59,5 @@ private:
 		vi2 m_size;
 		bool m_fullscreen;
 		bool m_vsync;
-	};
-
-	param p;
+	} p;
 };

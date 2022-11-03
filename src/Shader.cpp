@@ -174,5 +174,5 @@ void Shader::SetUniform(const std::string& name, const vf4& vector)
 
 void Shader::SetUniform(const std::string& name, const mf4x4& matrix)
 {
-    glUniformMatrix4fv(GetUniform(name), 1, GL_FALSE, matrix.m[0]);
+    glUniformMatrix4fv(GetUniform(name), 1, GL_FALSE, glm::value_ptr(matrix));
 }

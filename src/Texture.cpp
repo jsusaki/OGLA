@@ -6,9 +6,9 @@ Texture::Texture()
 
 }
 
-Texture::Texture(const std::string& filepath)
+Texture::Texture(const std::string& filepath, bool vertical_flip)
 {
-    m_buffer = LoadFromFile(filepath);
+    m_buffer = LoadFromFile(filepath, vertical_flip);
 
     Create(m_width, m_height, m_buffer);
 
@@ -75,9 +75,9 @@ void Texture::Create(u32 width, u32 height, const u8* data, const bool filtered,
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-u8* Texture::LoadFromFile(const std::string& filepath)
+u8* Texture::LoadFromFile(const std::string& filepath, bool vertical_flip)
 {
-    stbi_set_flip_vertically_on_load(false);
+    stbi_set_flip_vertically_on_load(vertical_flip);
     int w = 0, h = 0, ch = 0;
     const char* path = filepath.c_str();
     u8* data = stbi_load(path, &w, &h, &ch, 0);

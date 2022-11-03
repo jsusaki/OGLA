@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <string>
 
@@ -6,7 +7,6 @@
 #include <glad/glad.h>
 
 #include "Type.h"
-
 
 enum Format
 {
@@ -37,7 +37,7 @@ class Texture
 {
 public:
 	Texture();
-	Texture(const std::string& filepath);
+	Texture(const std::string& filepath, bool vertical_flip);
 	~Texture();
 
 public:
@@ -46,8 +46,8 @@ public:
 	u32 GetID();
 
 public:
-	u8* LoadFromFile(const std::string& filepath);
-	void Create(u32 width, u32 height, const u8* data, const bool filtered = true, const bool clamped = true);
+	u8* LoadFromFile(const std::string& filepath, bool vertical_flip);
+	void Create(u32 width, u32 height, const u8* data, const bool filtered = true, const bool clamped = false);
 
 private:
 	u32 m_TextureID;

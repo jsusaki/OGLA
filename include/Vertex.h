@@ -7,10 +7,8 @@
 struct Vertex 
 {
     vf3 position;
-    color col;
     vf2 texture;
-
+    vf3 col;
     //vf3 normal;
-    //vf3 tangent;
     //vf2 uv;
 };

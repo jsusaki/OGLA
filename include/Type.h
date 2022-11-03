@@ -1,6 +1,10 @@
 #pragma once
-
+// C-Standard Types
 #include <cstdint>
+// GLM
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 // Type definitions
 typedef signed char s8;
@@ -14,69 +18,36 @@ typedef signed long long s64;
 typedef float f32;
 typedef double f64;
 
-
-// 32-bit Color 
+// float 32-bit Color 
 struct color
 {
 	f32 r; f32 g; f32 b; f32 a;
 };
 
-// 8-bit Color
+// uint 32-bit Color 
 struct pixel
 {
 	union
 	{
-		struct
-		{
-			u8 r; u8 g; u8 b; u8 a;
-		};
+		u32 p;
+		struct { u8 r; u8 g; u8 b; u8 a; };
 	};
 	pixel(u8 red, u8 green, u8 blue, u8 alpha = 0xFF) : r(red), g(green), b(blue), a(alpha) {}
 };
 
-// Math
-// TODO: Minimal Math Library
-template <typename T>
-struct v2
-{
-	T x;
-	T y;
-};
-typedef v2<s32> vi2;
-typedef v2<f32> vf2;
-typedef v2<f64> vd2;
+// glm typedefs
+typedef glm::ivec2 vi2;
+typedef glm::fvec2 vf2;
+typedef glm::dvec2 vd2;
 
+typedef glm::ivec3 vi3;
+typedef glm::fvec3 vf3;
+typedef glm::dvec3 vd3;
 
-template <typename T>
-struct v3
-{
-	T x;
-	T y;
-	T z;
-};
-typedef v3<s32> vi3;
-typedef v3<f32> vf3;
-typedef v3<f64> vd3;
+typedef glm::ivec4 vi4;
+typedef glm::fvec4 vf4;
+typedef glm::dvec4 vd4;
 
-
-template <typename T>
-struct v4
-{
-	T x;
-	T y;
-	T z;
-	T w;
-};
-typedef v4<s32> vi4;
-typedef v4<f32> vf4;
-typedef v4<f64> vd4;
-
-
-template <typename T>
-struct m4x4
-{
-	T m[4][4];
-};
-typedef m4x4<s32> mi4x4;
-typedef m4x4<f32> mf4x4;
-typedef m4x4<f64> md4x4;
+typedef glm::imat4x4 mi4x4;
+typedef glm::fmat4x4 mf4x4;
+typedef glm::dmat4x4 md4x4;

@@ -72,6 +72,7 @@ public:
 	void UpdateMouse();
 
 	// Input Callback Functions
+	// TODO: Decouple into Window Class
 	void GLFW_SetKeyboardCallback(GLFWwindow* window);
 	void GLFW_SetMouseCursorCallback(GLFWwindow* window);
 	void GLFW_SetMouseButtonCallback(GLFWwindow* window);
