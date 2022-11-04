@@ -22,25 +22,19 @@
 			Texture Abstraction
 			Mesh Abstraction
 				Triangle
-				Quad
+				Quad (Plane)
+				Cube
+			Camera Abstraction
+				Orthographic Projection
+				Perspective Projection
 			Material Abstraction
 			Light Abstraction
 				Specular Light
 				Spot Light
-
 			Shadow Abstraction
-			Camera Abstraction
-				Orthographic Projection
-				Perspective Projection
-
-			Shape Abstraction
-				Point
-				Plane
-				Cube
 
 	TODO:
 		Layer Abstraction
-		Mesh Abstraction
 		Shape Abstraction
 			Cube
 		Camera Abstraction
@@ -66,6 +60,7 @@
 			OpenGL Tutorial: http://www.opengl-tutorial.org/
 			Open.GL: https://open.gl/
 			OOGL: https://github.com/Overv/OOGL
+			songho: http://www.songho.ca/opengl/index.html
 */
 #include "Engine.h"
 

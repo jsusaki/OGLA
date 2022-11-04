@@ -18,7 +18,8 @@ void Window::Create(std::string title, int w, int h, bool fullscreen, bool vsync
     p.m_title = title;
     p.m_fullscreen = fullscreen;
     p.m_vsync = vsync;
-
+    m_mouse_input_focus = false;
+    
     GLFW_Init();
     GLFW_CreateWindow(title, w, h, fullscreen, vsync);
     GLAD_Load();
@@ -27,6 +28,7 @@ void Window::Create(std::string title, int w, int h, bool fullscreen, bool vsync
     GetPrimaryMonitor();
     SetVsync(vsync);
     SetFullScreen(fullscreen);
+    SetMouseInputFocus(m_mouse_input_focus);
     UpdateViewport({ 0, 0 }, { w, h });
     PrepareDrawing();
 }
@@ -98,7 +100,16 @@ void Window::ToggleFullScreen()
 
 void Window::ToggleVsync()
 {
-    //SetVsync(!IsVsync());
+    p.m_vsync = !p.m_vsync;
+    SetVsync(p.m_vsync);
+    //SetVsync(!IsVsync()); // does not work for unknown reason
+}
+
+void Window::ToggleMouseFocus()
+{
+    m_mouse_input_focus = !m_mouse_input_focus;
+    SetMouseInputFocus(m_mouse_input_focus);
+    //SetMouseInputFocus(!IsMouseFocused()); // does not work for unknown reason
 }
 
 void Window::GetPrimaryMonitor()
@@ -146,6 +157,20 @@ bool Window::IsFullScreen()
     return glfwGetWindowMonitor(m_window) != nullptr;
 }
 
+void Window::SetMouseInputFocus(bool focus)
+{
+    if (focus)
+        glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    else
+        glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
+}
+
+bool Window::IsMouseFocused()
+{
+    return m_mouse_input_focus;
+}
+
 void Window::GLFW_Init()
 {
     if (!glfwInit())
@@ -161,8 +186,8 @@ void Window::GLFW_Init()
     // Enable Forward Compatibility
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    printf("GLFW %i.%i.%i\n", GLFW_VERSION_MAJOR, GLFW_VERSION_MINOR, GLFW_VERSION_REVISION);
-}
+    printf("GLFW %i.%i.%i\n", GLFW_VERSION_MAJOR, GLFW_VERSION_MINOR, GLFW_VERSION_REVISION); 
+ }
 
 void Window::GLFW_CreateWindow(std::string title, int w, int h, bool fullscreen, bool vsync)
 {

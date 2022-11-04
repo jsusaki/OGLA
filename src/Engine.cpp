@@ -32,10 +32,10 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 	/*
 	// Create Quad
 	std::vector<Vertex> vertices = {
-		{{ 0.5f, 0.5f, 0.0f },{ 1.0f, 1.0f }},   // top right
-		{{ 0.5f,-0.5f, 0.0f },{ 1.0f, 0.0f }},   // bottom right
-		{{-0.5f,-0.5f, 0.0f },{ 0.0f, 0.0f }},   // bottom left
-		{{-0.5f, 0.5f, 0.0f },{ 0.0f, 1.0f }},   // top left
+		{{ 0.5f, 0.5f, 0.0f },{ 1.0f, 1.0f },{1.0f, 0.0f, 0.0f}},   // top right
+		{{ 0.5f,-0.5f, 0.0f },{ 1.0f, 0.0f },{0.0f, 1.0f, 0.0f}},   // bottom right
+		{{-0.5f,-0.5f, 0.0f },{ 0.0f, 0.0f },{0.0f, 0.0f, 1.0f}},   // bottom left
+		{{-0.5f, 0.5f, 0.0f },{ 0.0f, 1.0f },{1.0f, 0.0f, 0.0f}},   // top left
 	};
 	std::vector<u32> indices = {
 		0, 1, 3, // first triangle
@@ -97,7 +97,7 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 		4, 5, 6,  //v0-v3-v4 
 		6, 7, 4,  //v4-v5-v0 
 		// top
-		8, 9, 10, //v0-v5-v6
+		8, 9, 10, //v0-v5-v6,   
 		10,11, 8, //v6-v1-v0
 		// left
 		12,13,14, //v1-v6-v7 
@@ -117,9 +117,9 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 	// Create Cube Position
 	std::vector<vf3> CubePositions = {
 		{ 0.0f, 0.0f, 0.0f },
-		{ 2.0f, 5.0f,-15.0f },
+		{ 2.0f, 5.0f,-15.0f},
 		{-1.5f,-2.2f,-2.5f },
-		{-3.8f,-2.0f,-12.3f },
+		{-3.8f,-2.0f,-12.3f},
 		{ 2.4f,-0.4f,-3.5f },
 		{-1.7f, 3.0f,-7.5f },
 		{ 1.3f,-2.0f,-2.5f },
@@ -127,7 +127,7 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 		{ 1.5f, 0.2f,-1.5f },
 		{-1.3f, 1.0f,-1.5f },
 
-		{ 5.0f, 5.0f, 5.0f },
+		{ 5.0f, 5.0f,  5.0f },
 		{ 6.0f, 7.0f,-25.0f },
 		{-5.5f,-6.2f,-12.5f },
 		{-7.8f,-6.0f,-22.3f },
@@ -157,7 +157,8 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 	m_shader->Use();
 	m_shader->SetUniform("texture1", 0);
 
-	m_camera_position = {0.0f, 0.0f, -3.0f};
+	// Create Camera
+	m_camera = std::make_unique<Camera>(vf3{ 0.0f, 0.0f, 3.0f });
 
 	return true;
 }
@@ -179,7 +180,7 @@ bool Engine::Start()
 		fAccumulator += fDeltaTime;
 		while (fAccumulator >= fDeltaTime)
 		{
-			ProcessInput();
+			ProcessInput(fElapsedTime);
 			Update(fElapsedTime);
 			fAccumulator -= fDeltaTime;
 		}
@@ -207,32 +208,28 @@ bool Engine::Shutdown()
 	return true;
 }
 
-void Engine::ProcessInput()
+void Engine::ProcessInput(f32 fElapsedTime)
 {
 	m_input->HandleEvent();
 
-	// Keyboard Input
+	// Application Control
 	if (m_input->GetKey(Key::ESCAPE).pressed) m_window->Close();
+	if (m_input->GetKey(Key::TAB).pressed) m_window->ToggleMouseFocus();
 	if (m_input->GetKey(Key::F11).pressed) m_window->ToggleFullScreen();
 
-	// Camera Control
-	if (m_input->GetKey(Key::W).held) m_camera_velocity.z = +1.0f; 
-	else if (m_input->GetKey(Key::S).held) m_camera_velocity.z = -1.0f;
-	else m_camera_velocity.z = 0.0f;
-
-	if (m_input->GetKey(Key::A).held) m_camera_velocity.x = +1.0f;
-	else if (m_input->GetKey(Key::D).held) m_camera_velocity.x = -1.0f;
-	else m_camera_velocity.x = 0.0f;
+	// Camera Key Control
+	if (m_input->GetKey(Key::W).held) m_camera->KeyControl(Direction::FORWARD, fElapsedTime);
+	if (m_input->GetKey(Key::S).held) m_camera->KeyControl(Direction::BACKWARD, fElapsedTime);
+	if (m_input->GetKey(Key::A).held) m_camera->KeyControl(Direction::LEFT, fElapsedTime);
+	if (m_input->GetKey(Key::D).held) m_camera->KeyControl(Direction::RIGHT, fElapsedTime);
+	if (m_input->GetKey(Key::Q).held) m_camera->KeyControl(Direction::DOWN, fElapsedTime);
+	if (m_input->GetKey(Key::E).held) m_camera->KeyControl(Direction::UP, fElapsedTime);
 	
-	if (m_input->GetKey(Key::Q).held) m_camera_velocity.y = -1.0f;
-	else if (m_input->GetKey(Key::E).held) m_camera_velocity.y = +1.0f;
-	else m_camera_velocity.y = 0.0f;
+	// Camera Mouse Control
+	m_camera->MouseControl(m_input->GetMousePos());
 
-	// Mouse Input
 	// if (m_input->GetMouse(0).pressed) std::cout << "Mouse Pressed\n";
 	// if (m_input->GetMouse(0).released) std::cout << "Mouse Released\n";
-	// if (m_input->GetMouseWheel() > 0) std::cout << "Mouse Wheel up " << m_input->GetMouseWheel() << "\n";
-	//else if (m_input->GetMouseWheel() < 0) std::cout << "Mouse Wheel down " << m_input->GetMouseWheel() << "\n";
 	//std::cout << "Mouse Pos " << m_input->GetMousePos().x << "," << m_input->GetMousePos().y << "\n";
 	//std::cout << "Mouse Pos Delta" << m_input->GetMouseDelta().x << "," << m_input->GetMouseDelta().y << "\n";
 }	
@@ -242,14 +239,6 @@ void Engine::Update(f32 fElapsedTime)
 	// Game Logic
 	acc_timer += fElapsedTime * 3;
 
-	// Camera Update
-	m_camera_position += m_camera_velocity * fElapsedTime;
-	view = mf4x4(1.0f);
-	view = glm::translate(view, m_camera_position);
-
-	projection = mf4x4(1.0f);
-	projection = glm::perspective(glm::radians(45.0f), (float)m_window->Width() / (float)m_window->Height(), 0.1f, 100.0f);
-	
 	// Model transformations
 	for (u32 i = 0; i < m_models.size(); i++)
 		m_models[i]->Rotate(acc_timer * i, { 1.0f, 0.3f, 0.5f });
@@ -259,16 +248,14 @@ void Engine::Render()
 {
 	m_window->ClearBuffer();
 
-	// Draw
-	// ========================================================================
+	// Draw ===================================================================
 
 	// Set View and Projection Matrix
-	m_shader->SetUniform("view", view);
-	m_shader->SetUniform("projection", projection);
+	m_shader->SetUniform("view", m_camera->GetViewMatrix());
+	m_shader->SetUniform("projection", m_camera->GetProjectionMatrix((f32)m_window->Width() / (f32)m_window->Height()));
 
 	// Draw Models
-	for (auto& m : m_models)
-		m->Draw(m_shader);
+	for (auto& m : m_models) m->Draw(m_shader);
 
 	// ========================================================================
 

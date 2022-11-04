@@ -18,8 +18,8 @@ Abstraction Currently Work In Progress
 - [x] Texture
 - [x] Mesh
 - [x] Model
+- [x] Camera
 - [ ] Primitive Geometry
-- [ ] Camera
 - [ ] Layer
 - [ ] Material
 - [ ] Light

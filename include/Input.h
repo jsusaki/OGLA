@@ -46,6 +46,7 @@ public:
 
 public:
 	void HandleEvent();
+
 	// Keyboard
 	KeyState GetKey(Key k);
 	u8 GetKeyMap(s32 k);

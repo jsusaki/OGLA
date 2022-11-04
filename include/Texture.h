@@ -1,5 +1,4 @@
 #pragma once
-
 #include <iostream>
 #include <string>
 
@@ -8,6 +7,7 @@
 
 #include "Type.h"
 
+// review these formats
 enum Format
 {
 	RGB = GL_RGB,

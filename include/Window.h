@@ -21,25 +21,28 @@ public:
 
 public:
 	// TODO: Separte into Renderer Class
-	void UpdateViewport(const vi2& m_pos, const vi2& m_size);
+	void UpdateViewport(const vi2& pos, const vi2& size);
 	void ClearBuffer(pixel p = { 0, 0, 0 }, bool depth = true);
 	void PrepareDrawing(bool depth = true, bool cullface = false);
 	void DisplayFrame();
 
 public:
-	int Width();
-	int Height();
+	s32 Width();
+	s32 Height();
 	GLFWwindow* GetWindow();
 	bool ShouldClose();
 	void ToggleFullScreen();
+	void SetFullScreen(bool fullscreen);
+	bool IsFullScreen();
 	void ToggleVsync();
+	void SetVsync(bool vsync);
+	bool IsVsync();
+	void ToggleMouseFocus();
+	void SetMouseInputFocus(bool focus);
+	bool IsMouseFocused();
 
 public:
 	void GetPrimaryMonitor();
-	void SetVsync(bool vsync);
-	bool IsVsync();
-	void SetFullScreen(bool fullscreen);
-	bool IsFullScreen();
 
 private:
 	// Internal Configurations
@@ -60,4 +63,6 @@ private:
 		bool m_fullscreen;
 		bool m_vsync;
 	} p;
+
+	bool m_mouse_input_focus;
 };

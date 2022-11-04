@@ -4,12 +4,13 @@
 #include <chrono>
 #include <memory>
 
-
 #include "Window.h"
 #include "Input.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "Model.h"
+#include "Camera.h"
+
 
 class Engine
 {
@@ -22,7 +23,7 @@ public:
 	bool Shutdown();
 
 public:
-	void ProcessInput();
+	void ProcessInput(f32 fElapsedTime);
 	void Update(f32 fElapsedTime);
 	void Render();
 
@@ -46,13 +47,8 @@ private:
 	// Tests
 	std::shared_ptr<Shader> m_shader;
 	std::shared_ptr<Texture> m_texture1;
-    std::shared_ptr<Model> m_model;
+	std::shared_ptr<Model> m_model;
 	std::vector<std::shared_ptr<Model>> m_models;
-
-	mf4x4 view;
-	mf4x4 projection;
 	f32 acc_timer;
-
-	vf3 m_camera_position;
-	vf3 m_camera_velocity;
+	std::unique_ptr<Camera> m_camera;
 };
