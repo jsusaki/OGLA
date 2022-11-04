@@ -1,3 +1,3 @@
 #! /bin/sh
-cd ../build/OpenGLCore
-./OpenGLCore
+cd ../build/OGLA
+./OGLA
