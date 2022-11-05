@@ -30,7 +30,6 @@ public:
 
 	void SetPerspective(f32 fov, f32 aspect, f32 near, f32 far);
 	void SetOrthographic(f32 left, f32 right, f32 top, f32 bottom, f32 near, f32 far);
-
 	void SetCameraMode(CameraMode mode);
 
 	void KeyControl(Direction direction, f32 fElapsedTime);
@@ -40,31 +39,26 @@ public:
 	void UpdateVectors();
 
 private:
+	CameraMode m_mode;
+
 	mf4x4 m_projection;
 	mf4x4 m_view;
+
+	f32 m_FOV;
+	f32 m_aspect_ratio;
+	f32 m_near;
+	f32 m_far;
+	f32 m_orthographic_scale;
 
 	vf3 m_position;
 	vf3 m_front;
 	vf3 m_up;
 	vf3 m_right;
 	vf3 m_worldUp;
-
-	// Projection parameters
-	f32 m_FOV;
-	f32 m_aspect;
-	f32 m_near;
-	f32 m_far;
-
-	// Euler angles
 	f32 m_yaw;
 	f32 m_pitch;
-
 	f32 m_speed;
-
 	f32 m_sensitivity;
-	bool m_firstMouse;
+	bool m_first_mouse_move;
 	vf2 m_mouse_prev;
-	f32 m_zoom;
-
-	CameraMode m_mode;
 };

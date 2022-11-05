@@ -9,29 +9,6 @@ The design principle applied was to identify rendering engine concepts, and ecap
 
 - Insert architecture diagram here.
 
-### Control
-
-- Application Control
-    - `ESCAPE`: Close
-    - `F11`: Full Screen (Only on Primary Screen)
-    - `TAB`: Toggle Mouse Focus
-
-- Rendering Control
-    - `1`: Normal Rendering
-    - `2`: Wireframe Rendering
-
-- Camera Control
-    - `W`: Move Forward
-    - `S`: Move Backward
-    - `A`: Move Left
-    - `D`: Move Right
-    - `Q`: Move Down
-    - `E`: Move Up
-    - `F1`: Perspective Camera
-    - `F2`: Orthographic Camera
-    - `Cursor`: Focal Point
-    - `Wheel`: Zoom in / Zoom Out
-
 ### Features
 
 Rendering Abstractions
@@ -83,6 +60,29 @@ cd scripts
 #### Windows
 
 Visual Studio Solution and batch script will be provided.
+
+### Control
+
+- Application Control
+    - `ESCAPE`: Close
+    - `F11`: Full Screen (Only on Primary Screen)
+    - `TAB`: Toggle Mouse Focus
+
+- Rendering Control
+    - `1`: Normal Rendering
+    - `2`: Wireframe Rendering
+
+- Camera Control
+    - `W`: Move Forward
+    - `S`: Move Backward
+    - `A`: Move Left
+    - `D`: Move Right
+    - `Q`: Move Down
+    - `E`: Move Up
+    - `F1`: Perspective Camera
+    - `F2`: Orthographic Camera
+    - `Cursor`: Focal Point
+    - `Wheel`: Zoom in / Zoom Out
 
 ### Dependencies
 

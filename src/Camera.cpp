@@ -5,25 +5,22 @@ Camera::Camera()
 	m_view = mf4x4(1.0f);
 	m_projection = mf4x4(1.0f);
 
+	m_near = 0.1f;
+	m_far = 1000.0f;
+	m_FOV = 45.0f;
+	m_aspect_ratio = 0.0f;
+	m_orthographic_scale = 40.0f;
+
 	m_position = { 0.0f, 0.0f, 0.0f };
 	m_front = { 0.0f, 0.0f, -1.0f };
 	m_up = { 0.0f, 1.0f, 0.0f };
 	m_right;
 	m_worldUp = { 0.0f, 1.0f, 0.0f };
-
-	m_near = 0.1f;
-	m_far = 1000.0f;
-	m_FOV = 45.0f;
-	m_aspect = 0.0f;
-	m_zoom = 40.0f;
-
 	m_yaw = -90.0f;
 	m_pitch = 0.0f;
-
 	m_speed = 1.0f;
 	m_sensitivity = 0.1f;
-
-	m_firstMouse = true;
+	m_first_mouse_move = true;
 	m_mouse_prev = { 0.0f, 0.0f };
 
 	m_mode = CameraMode::PERSPECTIVE;
@@ -36,25 +33,22 @@ Camera::Camera(vf3 position, vf3 worldup, f32 yaw, f32 pitch, f32 speed, f32 sen
 	m_view = mf4x4(1.0f);
 	m_projection = mf4x4(1.0f);
 
+	m_near = 0.1f;
+	m_far = 1000.0f;
+	m_FOV = 45.0f;
+	m_aspect_ratio = 0.0f;
+	m_orthographic_scale = 40.0f;
+
 	m_position = position;
 	m_front = { 0.0f, 0.0f, -1.0f };
 	m_up = { 0.0f, 1.0f, 0.0f };
 	m_right;
 	m_worldUp = worldup;
-
-	m_near = 0.1f;
-	m_far = 1000.0f;
-	m_FOV = 45.0f;
-	m_aspect = 0.0f;
-	m_zoom = 40.0f;
-
 	m_yaw = yaw;
 	m_pitch = pitch;
-
 	m_speed = speed;
 	m_sensitivity = sensitivity;
-
-	m_firstMouse = true;
+	m_first_mouse_move = true;
 	m_mouse_prev = { 0.0f, 0.0f };
 
 	m_mode = CameraMode::PERSPECTIVE;
@@ -72,19 +66,16 @@ mf4x4 Camera::GetProjectionMatrix(f32 width, f32 height)
 {
 	switch (m_mode)
 	{
-	case CameraMode::PERSPECTIVE:
-		m_projection = glm::perspective(glm::radians(m_FOV), width / height, m_near, m_far); break;
-	case CameraMode::ORTHOGRAPHIC:
+		case CameraMode::PERSPECTIVE:
 		{
-			// Review Orthographic Projection Calculations
 			f32 aspect_ratio = width / height;
-			f32 half_height = height / 2.0f;
-			f32 half_width= half_height * aspect_ratio;
-
-			m_projection = glm::ortho(-half_width / m_zoom, half_width / m_zoom, -half_height / m_zoom, half_height / m_zoom, m_near, m_far);
-
-			//m_projection = glm::ortho(-width / m_zoom, width / m_zoom, -height / m_zoom, height / m_zoom, m_near, m_far); break;
-
+			m_projection = glm::perspective(glm::radians(m_FOV), aspect_ratio, m_near, m_far);
+		} break;
+		case CameraMode::ORTHOGRAPHIC:
+		{
+			f32 aspect_ratio = width / height;
+			f32 distance = 0.5f * (m_far - m_near);
+			m_projection = glm::ortho(-m_orthographic_scale * aspect_ratio, m_orthographic_scale * aspect_ratio, -m_orthographic_scale, m_orthographic_scale, -distance, distance);
 		} break;
 	}
 
@@ -98,8 +89,8 @@ vf3 Camera::GetPosition()
 
 void Camera::SetPerspective(f32 fov, f32 aspect, f32 near, f32 far)
 {
-	m_FOV = fov; m_aspect = aspect; m_near = near; m_far = far;
-	m_projection = glm::perspective(glm::radians(m_FOV), m_aspect, m_near, m_far);
+	m_FOV = fov; m_aspect_ratio = aspect; m_near = near; m_far = far;
+	m_projection = glm::perspective(glm::radians(m_FOV), m_aspect_ratio, m_near, m_far);
 }
 
 void Camera::SetOrthographic(f32 left, f32 right, f32 top, f32 bottom, f32 near, f32 far)
@@ -119,20 +110,21 @@ void Camera::KeyControl(Direction direction, f32 fElapsedTime)
 
 	switch (direction) 
 	{
-	case Direction::FORWARD:  m_position += m_front * velocity; break;
-	case Direction::BACKWARD: m_position -= m_front * velocity; break;
-	case Direction::LEFT:     m_position -= m_right * velocity; break;
-	case Direction::RIGHT:    m_position += m_right * velocity; break;
-	case Direction::UP:       m_position += m_worldUp * velocity; break;
-	case Direction::DOWN:     m_position -= m_worldUp * velocity; break;
+		case Direction::FORWARD:  m_position += m_front * velocity; break;
+		case Direction::BACKWARD: m_position -= m_front * velocity; break;
+		case Direction::LEFT:     m_position -= m_right * velocity; break;
+		case Direction::RIGHT:    m_position += m_right * velocity; break;
+		case Direction::UP:       m_position += m_worldUp * velocity; break;
+		case Direction::DOWN:     m_position -= m_worldUp * velocity; break;
 	}
 }
 
 void Camera::MouseControl(vf2 mouse_pos)
 {
-	if (m_firstMouse) {
+	if (m_first_mouse_move) 
+	{
 		m_mouse_prev = mouse_pos;
-		m_firstMouse = false;
+		m_first_mouse_move = false;
 	}
 
 	vf2 delta = { (mouse_pos.x - m_mouse_prev.x) * m_sensitivity, (m_mouse_prev.y - mouse_pos.y) * m_sensitivity };
@@ -155,14 +147,16 @@ void Camera::MouseScrollControl(f32 delta)
 {
 	switch (m_mode)
 	{
-	case CameraMode::PERSPECTIVE: 
-		m_FOV += delta;
-		if (m_FOV < 1.0f)  m_FOV = 1.0f;
-		if (m_FOV > 45.0f) m_FOV = 45.0f;
-		break;
-	case CameraMode::ORTHOGRAPHIC:
-		m_zoom += delta;
-		break;
+		case CameraMode::PERSPECTIVE: 
+		{
+			m_FOV += delta;
+			if (m_FOV < 1.0f)  m_FOV = 1.0f;
+			if (m_FOV > 45.0f) m_FOV = 45.0f;
+		} break;
+		case CameraMode::ORTHOGRAPHIC:
+		{
+			m_orthographic_scale += delta;
+		} break;
 	}
 }
 
