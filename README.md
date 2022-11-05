@@ -60,6 +60,7 @@ Rendering Abstractions
 - [ ] Material
 - [ ] Light
 - [ ] Text
+- [ ] Scene
 
 ### Installation
 
