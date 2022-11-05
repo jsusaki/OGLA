@@ -1,3 +1,3 @@
-#! /bin/sh
+#! /bin/bash
 cd ../build/OGLA
 ./OGLA

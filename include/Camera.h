@@ -11,6 +11,12 @@ enum class Direction
 	DOWN
 };
 
+enum class CameraMode
+{
+	PERSPECTIVE,
+	ORTHOGRAPHIC
+};
+
 class Camera
 {
 public:
@@ -19,14 +25,18 @@ public:
 
 public:
 	mf4x4 GetViewMatrix();
-	mf4x4 GetProjectionMatrix(f32 aspect);
+	mf4x4 GetProjectionMatrix(f32 width, f32 height);
 	vf3 GetPosition();
 
 	void SetPerspective(f32 fov, f32 aspect, f32 near, f32 far);
 	void SetOrthographic(f32 left, f32 right, f32 top, f32 bottom, f32 near, f32 far);
 
+	void SetCameraMode(CameraMode mode);
+
 	void KeyControl(Direction direction, f32 fElapsedTime);
-	void MouseControl(vf2 delta);
+	void MouseControl(vf2 mouse_pos);
+	void MouseScrollControl(f32 delta);
+
 	void UpdateVectors();
 
 private:
@@ -54,4 +64,7 @@ private:
 	f32 m_sensitivity;
 	bool m_firstMouse;
 	vf2 m_mouse_prev;
+	f32 m_zoom;
+
+	CameraMode m_mode;
 };

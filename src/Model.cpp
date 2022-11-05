@@ -20,6 +20,17 @@ Model::Model(std::vector<Vertex>& vertices, std::vector<u32>& indices, VertexDat
 	m_meshes.push_back({ vertices, indices, def });
 }
 
+Model::Model(Mesh& mesh)
+{
+	m_model = mf4x4(1.0f);
+	m_position = vf3(0.0f, 0.0f, 0.0f);
+	m_rotation = vf3(0.0f, 0.0f, 0.0f);
+	m_scale = vf3(1.0f, 1.0f, 1.0f);
+	m_angle = 0.0f;
+
+	m_meshes.push_back(mesh);
+}
+
 Model::~Model()
 {
 

@@ -19,6 +19,7 @@ void Window::Create(std::string title, int w, int h, bool fullscreen, bool vsync
     p.m_fullscreen = fullscreen;
     p.m_vsync = vsync;
     m_mouse_input_focus = false;
+    m_render_mode = RenderMode::NORMAL;
     
     GLFW_Init();
     GLFW_CreateWindow(title, w, h, fullscreen, vsync);
@@ -29,6 +30,7 @@ void Window::Create(std::string title, int w, int h, bool fullscreen, bool vsync
     SetVsync(vsync);
     SetFullScreen(fullscreen);
     SetMouseInputFocus(m_mouse_input_focus);
+    SetRenderMode(m_render_mode);
     UpdateViewport({ 0, 0 }, { w, h });
     PrepareDrawing();
 }
@@ -98,38 +100,6 @@ void Window::ToggleFullScreen()
     SetFullScreen(!IsFullScreen());
 }
 
-void Window::ToggleVsync()
-{
-    p.m_vsync = !p.m_vsync;
-    SetVsync(p.m_vsync);
-    //SetVsync(!IsVsync()); // does not work for unknown reason
-}
-
-void Window::ToggleMouseFocus()
-{
-    m_mouse_input_focus = !m_mouse_input_focus;
-    SetMouseInputFocus(m_mouse_input_focus);
-    //SetMouseInputFocus(!IsMouseFocused()); // does not work for unknown reason
-}
-
-void Window::GetPrimaryMonitor()
-{
-    m_monitor = glfwGetPrimaryMonitor();
-}
-
-void Window::SetVsync(bool vsync)
-{
-    if (vsync)
-        glfwSwapInterval(1);
-    else 
-        glfwSwapInterval(0); // Remove Framecap
-}
-
-bool Window::IsVsync()
-{
-    return p.m_vsync;
-}
-
 void Window::SetFullScreen(bool fullscreen)
 {
     if (IsFullScreen() == fullscreen)
@@ -157,18 +127,65 @@ bool Window::IsFullScreen()
     return glfwGetWindowMonitor(m_window) != nullptr;
 }
 
+void Window::ToggleVsync()
+{
+    p.m_vsync = !p.m_vsync;
+    SetVsync(p.m_vsync);
+    //SetVsync(!IsVsync()); // does not work for unknown reason
+}
+
+void Window::SetVsync(bool vsync)
+{
+    if (vsync)
+        glfwSwapInterval(1);
+    else
+        glfwSwapInterval(0); // Remove Framecap
+}
+
+bool Window::IsVsync()
+{
+    return p.m_vsync;
+}
+
+void Window::ToggleMouseFocus()
+{
+    m_mouse_input_focus = !m_mouse_input_focus;
+    SetMouseInputFocus(m_mouse_input_focus);
+    //SetMouseInputFocus(!IsMouseFocused()); // does not work for unknown reason
+}
+
 void Window::SetMouseInputFocus(bool focus)
 {
     if (focus)
         glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     else
         glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-
 }
 
 bool Window::IsMouseFocused()
 {
     return m_mouse_input_focus;
+}
+
+void Window::GetPrimaryMonitor()
+{
+    m_monitor = glfwGetPrimaryMonitor();
+}
+
+RenderMode Window::GetRenderMode()
+{
+    return m_render_mode;
+}
+
+void Window::SetRenderMode(RenderMode mode)
+{
+    m_render_mode = mode;
+
+    switch (m_render_mode)
+    {
+    case RenderMode::NORMAL:    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); break;
+    case RenderMode::WIREFRAME: glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); break;
+    }
 }
 
 void Window::GLFW_Init()

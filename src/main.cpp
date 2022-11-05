@@ -12,36 +12,41 @@
 				Layer Abstraction
 					Layer vector
 						Layer[0].Update()
-
 			Vertex Abstraction
-			Shader Abstraction
 			Vertex Buffer Abstraction
 			Index Buffer Abstraction
 			Vertex Array Abstraction
 			Vertex Data Abstraction
+			Shader Abstraction
 			Texture Abstraction
 			Mesh Abstraction
 				Triangle
 				Quad (Plane)
 				Cube
+			Model Abstration
 			Camera Abstraction
 				Orthographic Projection
 				Perspective Projection
+
 			Material Abstraction
 			Light Abstraction
 				Specular Light
 				Spot Light
+
 			Shadow Abstraction
 
 	TODO:
-		Layer Abstraction
-		Shape Abstraction
+		Asset Import
+		Primitive Shape Abstraction
+			Triangle
+			Quad
 			Cube
-		Camera Abstraction
+		Layer Abstraction
 		Material Abstraction
 		Light Abstraction
-		Cube Rendering
-		Cube Rendering Framework (Voxel Rendering)
+
+		Voxel Rendering
+		Voxel Rendering Framework
 
 		FURTHER ABSTRACT AWAY ENGINE and APPLICATION?
 			Code starts to clutter

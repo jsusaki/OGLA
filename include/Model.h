@@ -1,13 +1,16 @@
 #pragma once
+
 #include "Mesh.h"
 #include "Texture.h"
 #include <assimp/Importer.hpp>
+
 
 class Model
 {
 public:
 	Model();
 	Model(std::vector<Vertex>& vertices, std::vector<u32>& indices, VertexData& def);
+	Model(Mesh& mesh);
 	~Model();
 
 public:

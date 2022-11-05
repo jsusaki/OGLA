@@ -10,6 +10,7 @@
 #include "Texture.h"
 #include "Model.h"
 #include "Camera.h"
+#include "Shape.h"
 
 
 class Engine
@@ -47,7 +48,6 @@ private:
 	// Tests
 	std::shared_ptr<Shader> m_shader;
 	std::shared_ptr<Texture> m_texture1;
-	std::shared_ptr<Model> m_model;
 	std::vector<std::shared_ptr<Model>> m_models;
 	f32 acc_timer;
 	std::unique_ptr<Camera> m_camera;

@@ -8,6 +8,11 @@
 #include "Type.h"
 #include "Input.h"
 
+enum class RenderMode
+{
+	NORMAL = 0,
+	WIREFRAME = 1
+};
 
 class Window
 {
@@ -43,6 +48,8 @@ public:
 
 public:
 	void GetPrimaryMonitor();
+	RenderMode GetRenderMode();
+	void SetRenderMode(RenderMode mode);
 
 private:
 	// Internal Configurations
@@ -65,4 +72,6 @@ private:
 	} p;
 
 	bool m_mouse_input_focus;
+
+	RenderMode m_render_mode;
 };
