@@ -3,7 +3,7 @@ OGLA : OpenGL Abstraction is a reference renderer implemented in C++.
 
 The objective of this project is to abstract renderer functionality to serve as a foundation for simple 2D/3D real-time applications.
 
-The design principle applied was to identify rendering engine concepts, and ecapsulate these in a simple and inteligible abstraction to be easily understandable, readable and learnable.
+The design principle applied was to identify rendering engine concepts, and ecapsulate these in a simple and inteligible abstraction to be easily readable, understandable and learnable.
 
 ### Architecture
 
