@@ -10,12 +10,9 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 	// Construct window
 	m_window = std::make_unique<Window>(title, w, h, fullscreen, vsync);
 
-	// Construct input and set callback function
+	// Construct input and set callback functions
 	m_input = std::make_unique<Input>();
-	m_input->GLFW_SetKeyboardCallback(m_window->GetWindow());
-	m_input->GLFW_SetMouseCursorCallback(m_window->GetWindow());
-	m_input->GLFW_SetMouseButtonCallback(m_window->GetWindow());
-	m_input->GLFW_SetMouseScrollCallBack(m_window->GetWindow());
+	m_window->GLFW_SetInputCallback(m_input);
 
 	// Initialize timing
 	m_t1 = std::chrono::system_clock::now();
@@ -62,7 +59,7 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 	};
 
 	// Create Shader
-	m_shader = std::make_shared<Shader>("../../res/shaders/shader.vs.glsl", "../../res/shaders/shader.fs.glsl");
+	m_shader = std::make_shared<Shader>("../../res/shaders/shader.vs", "../../res/shaders/shader.fs");
 
 	// Create Texture
 	m_texture1 = std::make_shared<Texture>("../../res/textures/lisp.jpg", true);
@@ -70,7 +67,7 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 	// Create Models
 	for (u32 i = 0; i < CubePositions.size(); i++)
 	{
-		std::shared_ptr <Model> model = std::make_shared<Model>(cube);
+		std::shared_ptr<Model> model = std::make_shared<Model>(cube);
 		// Add Texture: how to associate texture with model?
 		model->m_textures.push_back(m_texture1);
 		// Set Model Positions
@@ -153,9 +150,11 @@ void Engine::ProcessInput(f32 fElapsedTime)
 	if (m_input->GetKey(Key::E).held) m_camera->KeyControl(Direction::UP, fElapsedTime);
 	
 	// Camera Mouse Control
+	//vf2 mouse_position = vf2{ (f32)m_input->GetMouseX(), (f32)m_input->GetMouseY()};
 	m_camera->MouseControl(m_input->GetMousePos());
 	m_camera->MouseScrollControl(m_input->GetMouseWheel());
 
+	// DEBUG
 	// if (m_input->GetMouse(0).pressed) std::cout << "Mouse Pressed\n";
 	// if (m_input->GetMouse(0).released) std::cout << "Mouse Released\n";
 	//std::cout << "Mouse Pos " << m_input->GetMousePos().x << "," << m_input->GetMousePos().y << "\n";

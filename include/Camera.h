@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Type.h"
+
 
 enum class Direction
 {
@@ -59,6 +61,5 @@ private:
 	f32 m_pitch;
 	f32 m_speed;
 	f32 m_sensitivity;
-	bool m_first_mouse_move;
 	vf2 m_mouse_prev;
 };

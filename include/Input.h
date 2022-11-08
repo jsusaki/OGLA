@@ -4,6 +4,7 @@
 #include <map>
 #include <array>
 
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include "Type.h"
@@ -66,18 +67,11 @@ public:
 	void UpdateKeyState(s32 key, bool state);
 	void UpdateKeyboard();
 	// Mouse
-	void UpdateMouseState(s32 button, bool state);
+	void UpdateMouseButtonState(s32 button, bool state);
 	void UpdateMousePos(f64 x, f64 y);
 	void UpdateMouseDelta(f64 dx, f64 dy);
 	void UpdateMouseWheel(s32 delta);
-	void UpdateMouse();
-
-	// Input Callback Functions
-	// TODO: Decouple into Window Class
-	void GLFW_SetKeyboardCallback(GLFWwindow* window);
-	void GLFW_SetMouseCursorCallback(GLFWwindow* window);
-	void GLFW_SetMouseButtonCallback(GLFWwindow* window);
-	void GLFW_SetMouseScrollCallBack(GLFWwindow* window);
+	void UpdateMouseButton();
 
 private:
 	// Key code state map

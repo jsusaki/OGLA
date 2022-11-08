@@ -20,7 +20,6 @@ Camera::Camera()
 	m_pitch = 0.0f;
 	m_speed = 1.0f;
 	m_sensitivity = 0.1f;
-	m_first_mouse_move = true;
 	m_mouse_prev = { 0.0f, 0.0f };
 
 	m_mode = CameraMode::PERSPECTIVE;
@@ -48,7 +47,6 @@ Camera::Camera(vf3 position, vf3 worldup, f32 yaw, f32 pitch, f32 speed, f32 sen
 	m_pitch = pitch;
 	m_speed = speed;
 	m_sensitivity = sensitivity;
-	m_first_mouse_move = true;
 	m_mouse_prev = { 0.0f, 0.0f };
 
 	m_mode = CameraMode::PERSPECTIVE;
@@ -70,13 +68,15 @@ mf4x4 Camera::GetProjectionMatrix(f32 width, f32 height)
 		{
 			f32 aspect_ratio = width / height;
 			m_projection = glm::perspective(glm::radians(m_FOV), aspect_ratio, m_near, m_far);
-		} break;
+			break;
+		}
 		case CameraMode::ORTHOGRAPHIC:
 		{
 			f32 aspect_ratio = width / height;
 			f32 distance = 0.5f * (m_far - m_near);
 			m_projection = glm::ortho(-m_orthographic_scale * aspect_ratio, m_orthographic_scale * aspect_ratio, -m_orthographic_scale, m_orthographic_scale, -distance, distance);
-		} break;
+			break;
+		}
 	}
 
 	return m_projection;
@@ -121,21 +121,20 @@ void Camera::KeyControl(Direction direction, f32 fElapsedTime)
 
 void Camera::MouseControl(vf2 mouse_pos)
 {
-	if (m_first_mouse_move) 
+	vf2 delta = { (mouse_pos.x - m_mouse_prev.x), (m_mouse_prev.y - mouse_pos.y) };
+
+	// Prevent Camera Jump if delta is too large
+	if (glm::length(delta) > 10.0f)
 	{
 		m_mouse_prev = mouse_pos;
-		m_first_mouse_move = false;
+		return;
 	}
-
-	vf2 delta = { (mouse_pos.x - m_mouse_prev.x) * m_sensitivity, (m_mouse_prev.y - mouse_pos.y) * m_sensitivity };
-
+	
 	m_mouse_prev = mouse_pos;
 
+	delta *= m_sensitivity;
 	m_yaw += delta.x;
 	m_pitch += delta.y;
-
-	if (m_yaw == 0.0f) m_yaw = 0.01f;
-	if (m_pitch == 0.0f) m_pitch = 0.01f;
 
 	if (m_pitch > 89.0f)  m_pitch = 89.0f;
 	if (m_pitch < -89.0f) m_pitch = -89.0f;

@@ -1,12 +1,15 @@
 #pragma once
 
+#include <iostream>
 #include <string>
+#include <memory>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include "Type.h"
 #include "Input.h"
+
 
 enum class RenderMode
 {
@@ -51,12 +54,19 @@ public:
 	RenderMode GetRenderMode();
 	void SetRenderMode(RenderMode mode);
 
+	void GLFW_SetInputCallback(std::unique_ptr<Input>& input);
+	
 private:
 	// Internal Configurations
 	void GLFW_Init();
 	void GLFW_CreateWindow(std::string title, int w, int h, bool fullscreen, bool vsync);
 	void GLAD_Load();
 	void GLFW_SetFrameBufferSizeCallback();
+
+	void GLFW_SetKeyboardCallback(std::unique_ptr<Input>& input);
+	void GLFW_SetMouseCursorCallback(std::unique_ptr<Input>& input);
+	void GLFW_SetMouseButtonCallback(std::unique_ptr<Input>& input);
+	void GLFW_SetMouseScrollCallBack(std::unique_ptr<Input>& input);
 
 private:
 	GLFWwindow* m_window;

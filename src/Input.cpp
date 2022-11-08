@@ -2,7 +2,7 @@
 
 Input::Input()
 {
-	// Map Keys
+	// Key Map
 	m_keys[GLFW_KEY_UNKNOWN] = Key::NONE;
 	m_keys[GLFW_KEY_A] = Key::A; m_keys[GLFW_KEY_B] = Key::B; m_keys[GLFW_KEY_C] = Key::C; m_keys[GLFW_KEY_D] = Key::D; m_keys[GLFW_KEY_E] = Key::E; 
 	m_keys[GLFW_KEY_F] = Key::F; m_keys[GLFW_KEY_G] = Key::G; m_keys[GLFW_KEY_H] = Key::H; m_keys[GLFW_KEY_I] = Key::I; m_keys[GLFW_KEY_J] = Key::J; 
@@ -52,7 +52,7 @@ void Input::HandleEvent()
 {
 	glfwPollEvents();
 	UpdateKeyboard();
-	UpdateMouse();
+	UpdateMouseButton();
 	// store to remain consistent between frames
 	m_vMousePos = m_vMousePosCache;
 	m_nMouseWheelDelta = m_nMouseWheelDeltaCache;
@@ -132,7 +132,7 @@ void Input::UpdateKeyboard()
 }
 
 // Mouse
-void Input::UpdateMouseState(s32 button, bool state)
+void Input::UpdateMouseButtonState(s32 button, bool state)
 {
 	m_MouseNewState[button] = state;
 }
@@ -144,7 +144,17 @@ void Input::UpdateMouseWheel(s32 delta)
 
 void Input::UpdateMousePos(f64 x, f64 y)
 {
-	m_vMousePosCache = { x, y };
+	bHasMouseFocus = true;
+
+	/*
+	// For Window Mode Only
+	if (m_vMousePosCache.x >= 800.0f)	m_vMousePosCache.x = 800.0f - 1;
+	if (m_vMousePosCache.y >= 600.0f)	m_vMousePosCache.y = 600.0f - 1;
+	if (m_vMousePosCache.x < 0.0f)	    m_vMousePosCache.x = 0.0f;
+	if (m_vMousePosCache.y < 0.0f)		m_vMousePosCache.y = 0.0f;
+	*/
+
+	m_vMousePosCache = { x , y };
 }
 
 void Input::UpdateMouseDelta(f64 dx, f64 dy)
@@ -152,8 +162,7 @@ void Input::UpdateMouseDelta(f64 dx, f64 dy)
 	m_vMouseDelta = { dx - m_vMousePosCache.x, m_vMousePosCache.y - dy };
 }
 
-
-void Input::UpdateMouse()
+void Input::UpdateMouseButton()
 {
 	for (u32 i = 0; i < 5; i++)
 	{
@@ -176,7 +185,6 @@ void Input::UpdateMouse()
 	}
 }
 
-
 void Input::UpdateMouseFocus(bool state)
 {
 	bHasMouseFocus = state;
@@ -185,84 +193,4 @@ void Input::UpdateMouseFocus(bool state)
 void Input::UpdateKeyFocus(bool state)
 {
 	bHasInputFocus = state;
-}
-
-// Callback Functions
-void Input::GLFW_SetKeyboardCallback(GLFWwindow* window)
-{
-	glfwSetWindowUserPointer(window, this);
-	glfwSetKeyCallback(window, [](GLFWwindow* window, s32 key, s32 scancode, s32 action, s32 mode)
-	{
-		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-			glfwSetWindowShouldClose(window, false);
-
-		Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
-		switch (action)
-		{
-			case GLFW_PRESS:
-			{
-				input->UpdateKeyState(input->GetKeyMap(key), true);
-				break;
-			}
-			case GLFW_RELEASE:
-			{
-				input->UpdateKeyState(input->GetKeyMap(key), false);
-				break;
-			}
-		}
-	});
-}
-
-void Input::GLFW_SetMouseCursorCallback(GLFWwindow* window)
-{
-	glfwSetWindowUserPointer(window, this);
-	glfwSetCursorPosCallback(window, [](GLFWwindow* window, f64 dx, f64 dy)
-	{
-		Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
-		input->UpdateMouseDelta(dx, dy);
-		input->UpdateMousePos(dx, dy);
-	});
-}
-
-void Input::GLFW_SetMouseButtonCallback(GLFWwindow* window)
-{
-	glfwSetWindowUserPointer(window, this);
-	glfwSetMouseButtonCallback(window, [](GLFWwindow* window, s32 button, s32 action, s32 mode)
-	{
-		Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
-		switch (action)
-		{
-			case GLFW_PRESS:
-			{
-				input->UpdateMouseState(button, true);
-				break;
-			}
-			case GLFW_RELEASE:
-			{
-				input->UpdateMouseState(button, false);
-				break;
-			}
-		}
-	});
-}
-
-void Input::GLFW_SetMouseScrollCallBack(GLFWwindow* window)
-{
-	glfwSetWindowUserPointer(window, this);
-	glfwSetScrollCallback(window, [](GLFWwindow* window, f64 dx, f64 dy)
-	{
-		Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
-		for (u32 i = 0; i < std::abs(dy); i++)
-		{
-			if (dy > 0)
-			{
-				input->UpdateMouseWheel(-1);
-
-			}
-			else if (dy < 0)
-			{
-				input->UpdateMouseWheel(1);
-			}
-		}
-	});
 }

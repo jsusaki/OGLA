@@ -39,23 +39,15 @@ Rendering Abstractions
 - [ ] Text
 - [ ] Scene
 
-### Installation
+### Installation and Build
 
-```
-git clone --recursive https://github.com/jsusaki/OGLA.git
-```
-
-### Build
-
-#### Linux & MacOS
-
-```
-mkdir build
-cd scripts
-./config.sh
-./build.sh
-./run.sh
-```
+1. `git clone --recursive https://github.com/jsusaki/OGLA.git`
+2. `cd OGLA`
+3. `mkdir build`
+4. `cd scripts`
+5. `./config.sh`
+6. `./build.sh`
+7. `./run.sh`
 
 #### Windows
 
