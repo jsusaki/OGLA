@@ -1,7 +1,5 @@
 #pragma once
-
 #include "Type.h"
-
 
 enum class Direction
 {

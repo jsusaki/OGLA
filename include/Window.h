@@ -54,7 +54,7 @@ public:
 	RenderMode GetRenderMode();
 	void SetRenderMode(RenderMode mode);
 
-	void GLFW_SetInputCallback(std::unique_ptr<Input>& input);
+	void GLFW_SetInputCallback(std::shared_ptr<Input> input);
 	
 private:
 	// Internal Configurations
@@ -63,10 +63,10 @@ private:
 	void GLAD_Load();
 	void GLFW_SetFrameBufferSizeCallback();
 
-	void GLFW_SetKeyboardCallback(std::unique_ptr<Input>& input);
-	void GLFW_SetMouseCursorCallback(std::unique_ptr<Input>& input);
-	void GLFW_SetMouseButtonCallback(std::unique_ptr<Input>& input);
-	void GLFW_SetMouseScrollCallBack(std::unique_ptr<Input>& input);
+	void GLFW_SetKeyboardCallback(std::shared_ptr<Input> input);
+	void GLFW_SetMouseCursorCallback(std::shared_ptr<Input> input);
+	void GLFW_SetMouseButtonCallback(std::shared_ptr<Input> input);
+	void GLFW_SetMouseScrollCallBack(std::shared_ptr<Input> input);
 
 private:
 	GLFWwindow* m_window;

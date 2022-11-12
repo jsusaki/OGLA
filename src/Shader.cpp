@@ -69,11 +69,11 @@ u32 Shader::Compile(ShaderType type, std::string& source)
 
     glCompileShader(shader);
 
-    int status = 0;
+    s32 status = 0;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
     if (status == GL_FALSE)
     {
-        int nMaxLength = 0;
+        s32 nMaxLength = 0;
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &nMaxLength);
 
         std::vector<char> vErrorLog(nMaxLength);
@@ -96,11 +96,11 @@ void Shader::Link()
 {
     glLinkProgram(m_ProgramID);
 
-    int status = 0;
+    s32 status = 0;
     glGetProgramiv(m_ProgramID, GL_LINK_STATUS, &status);
     if (status == GL_FALSE)
     {
-        int maxLength = 0;
+        s32 maxLength = 0;
         glGetProgramiv(m_ProgramID, GL_INFO_LOG_LENGTH, &maxLength);
        
         std::vector<char> vErrorLog(maxLength);
@@ -122,14 +122,19 @@ void Shader::Delete(u32& shader)
     glDeleteShader(shader);
 }
 
-u32 Shader::GetAttribute(const std::string& name)
+u32 Shader::GetAttribute(const std::string& name) const
 {
     return glGetAttribLocation(m_ProgramID, name.c_str());
 }
 
-u32 Shader::GetUniform(const std::string& name)
+u32 Shader::GetUniform(const std::string& name) const
 {
-    return glGetUniformLocation(m_ProgramID, name.c_str());
+    if (m_UniformLocations.find(name) != m_UniformLocations.end())
+        return m_UniformLocations[name];
+
+    u32 location = glGetUniformLocation(m_ProgramID, name.c_str());
+    m_UniformLocations[name] = location;
+    return location;
 }
 
 void Shader::SetUniform(const std::string& name, const s32& val)

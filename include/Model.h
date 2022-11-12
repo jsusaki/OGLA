@@ -1,7 +1,11 @@
 #pragma once
+
+#include <assimp/Importer.hpp>
+#include <memory>
+
 #include "Mesh.h"
 #include "Texture.h"
-#include <assimp/Importer.hpp>
+#include "Material.h"
 
 
 class Model
@@ -29,10 +33,22 @@ public:
 	vf3 GetScale() const;
 	f32 GetAngle() const;
 
-public:
+	void SetPosition(const vf3& pos);
+	void SetRotation(const vf3& axis);
+	void SetScale(const vf3& scale);
+	void SetAngle(const f32 angle);
+
+	void AddTexture(const std::shared_ptr<Texture>& texture);
+	std::vector<std::shared_ptr<Texture>> GetTextures() const;
+	
+	void AddMaterial(const std::shared_ptr<Material>& material);
+	std::vector<std::shared_ptr<Material>> GetMaterials() const;
+
+private:
 	std::string m_name;
 	std::vector<Mesh> m_meshes;
 	std::vector<std::shared_ptr<Texture>> m_textures;
+	std::vector<std::shared_ptr<Material>> m_materials;
 	mf4x4 m_model;
 
 	// Transform POD?

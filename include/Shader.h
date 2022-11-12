@@ -17,6 +17,7 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
+#include <unordered_map>
 
 #include <glad/glad.h>
 
@@ -51,8 +52,8 @@ public:
 	void Delete(u32& shader);
 
 public:
-	u32 GetAttribute(const std::string& name);
-	u32 GetUniform(const std::string& name);
+	u32 GetAttribute(const std::string& name) const;
+	u32 GetUniform(const std::string& name)  const;
 	void SetUniform(const std::string& name, const s32& val);
 	void SetUniform(const std::string& name, f32* val, s32 count);
 	void SetUniform(const std::string& name, s32* val, s32 count);
@@ -65,4 +66,5 @@ public:
 
 private:
 	u32 m_ProgramID;
+	mutable std::unordered_map<std::string, u32> m_UniformLocations;
 };

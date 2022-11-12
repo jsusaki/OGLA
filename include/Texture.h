@@ -37,7 +37,7 @@ class Texture
 {
 public:
 	Texture();
-	Texture(const std::string& filepath, bool vertical_flip);
+	Texture(const std::string& filepath, bool vertical_flip = false);
 	~Texture();
 
 public:

@@ -9,7 +9,6 @@
 
 #include "Type.h"
 
-
 enum Key
 {
 	NONE,

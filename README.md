@@ -11,8 +11,6 @@ The design principle applied was to identify rendering engine concepts, and ecap
 
 ### Features
 
-Rendering Abstractions
-
 - [x] Input
     - Keyboard
     - Mouse
@@ -33,11 +31,11 @@ Rendering Abstractions
     - Perspective Camera
     - Orthographic Camera
 - [x] Primitive Geometry
+- [X] Material
+- [X] Light
+- [X] Scene
 - [ ] Layer
-- [ ] Material
-- [ ] Light
 - [ ] Text
-- [ ] Scene
 
 ### Installation and Build
 

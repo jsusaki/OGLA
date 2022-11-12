@@ -190,7 +190,7 @@ void Window::SetRenderMode(RenderMode mode)
     }
 }
 
-void Window::GLFW_SetInputCallback(std::unique_ptr<Input>& input)
+void Window::GLFW_SetInputCallback(std::shared_ptr<Input> input)
 {
     GLFW_SetKeyboardCallback(input);
     GLFW_SetMouseCursorCallback(input);
@@ -251,7 +251,7 @@ void Window::GLFW_SetFrameBufferSizeCallback()
     });
 }
 
-void Window::GLFW_SetKeyboardCallback(std::unique_ptr<Input>& input)
+void Window::GLFW_SetKeyboardCallback(std::shared_ptr<Input> input)
 {
    glfwSetWindowUserPointer(m_window, input.get());
     glfwSetKeyCallback(m_window, [](GLFWwindow* window, s32 key, s32 scancode, s32 action, s32 mode)
@@ -276,7 +276,7 @@ void Window::GLFW_SetKeyboardCallback(std::unique_ptr<Input>& input)
     });
 }
 
-void Window::GLFW_SetMouseCursorCallback(std::unique_ptr<Input>& input)
+void Window::GLFW_SetMouseCursorCallback(std::shared_ptr<Input> input)
 {
     glfwSetWindowUserPointer(m_window, input.get());
     glfwSetCursorPosCallback(m_window, [](GLFWwindow* window, f64 dx, f64 dy)
@@ -287,7 +287,7 @@ void Window::GLFW_SetMouseCursorCallback(std::unique_ptr<Input>& input)
     });
 }
 
-void Window::GLFW_SetMouseButtonCallback(std::unique_ptr<Input>& input)
+void Window::GLFW_SetMouseButtonCallback(std::shared_ptr<Input> input)
 {
     glfwSetWindowUserPointer(m_window, input.get());
     glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, s32 button, s32 action, s32 mode)
@@ -309,7 +309,7 @@ void Window::GLFW_SetMouseButtonCallback(std::unique_ptr<Input>& input)
     });
 }
 
-void Window::GLFW_SetMouseScrollCallBack(std::unique_ptr<Input>& input)
+void Window::GLFW_SetMouseScrollCallBack(std::shared_ptr<Input> input)
 {
     glfwSetWindowUserPointer(m_window, input.get());
     glfwSetScrollCallback(m_window, [](GLFWwindow* window, f64 dx, f64 dy)

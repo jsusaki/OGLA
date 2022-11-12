@@ -9,9 +9,6 @@
 				Input Abstraction
 					Keyboard Input
 					Mouse Input
-				Layer Abstraction
-					Layer vector
-						Layer[0].Update()
 			Vertex Abstraction
 			Vertex Buffer Abstraction
 			Index Buffer Abstraction
@@ -27,29 +24,20 @@
 			Camera Abstraction
 				Orthographic Projection
 				Perspective Projection
-
 			Material Abstraction
+				PBR material
 			Light Abstraction
-				Specular Light
-				Spot Light
-
-			Shadow Abstraction
+				Phong Lighting
+				Binn-Phong Lighting
 
 	TODO:
 		Asset Import
-		Primitive Shape Abstraction
-			Triangle
-			Quad
-			Cube
 		Layer Abstraction
-		Material Abstraction
-		Light Abstraction
+		Shadow Abstraction
+		State Machine Abstraction
 
 		Voxel Rendering
 		Voxel Rendering Framework
-
-		FURTHER ABSTRACT AWAY ENGINE and APPLICATION?
-			Code starts to clutter
 
 	Useful Resources:
 		Voxel Engine
