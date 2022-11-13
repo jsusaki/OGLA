@@ -6,7 +6,7 @@
 
 #include "Window.h"
 #include "Input.h"
-#include "Scene.h"
+#include "SceneStateMachine.h"
 
 
 class Engine
@@ -30,10 +30,8 @@ private:
 	// Core systems
 	std::shared_ptr<Window> m_window;
 	std::shared_ptr<Input> m_input;
-
-	// TODO: Add Scene State Machine
-	std::shared_ptr<Scene> m_active_scene;
-	//std::map<std::string, Scene> m_scenes;
+	std::shared_ptr<Camera> m_camera;
+	std::unique_ptr<SceneStateMachine> m_scene_state;
 
 	// Frame time handling
 	std::chrono::time_point<std::chrono::system_clock> m_t1;

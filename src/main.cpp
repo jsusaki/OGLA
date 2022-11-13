@@ -29,12 +29,13 @@
 			Light Abstraction
 				Phong Lighting
 				Binn-Phong Lighting
+    		Scene Abstraction
+    		State Machine Abstraction
 
 	TODO:
 		Asset Import
 		Layer Abstraction
 		Shadow Abstraction
-		State Machine Abstraction
 
 		Voxel Rendering
 		Voxel Rendering Framework

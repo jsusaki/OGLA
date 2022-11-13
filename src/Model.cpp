@@ -148,6 +148,16 @@ void Model::SetAngle(const f32 angle)
 	m_angle = angle;
 }
 
+void Model::SetName(std::string name)
+{
+	m_name = name;
+}
+
+std::string Model::GetName()
+{
+	return m_name;
+}
+
 void Model::AddTexture(const std::shared_ptr<Texture>& texture)
 {
 	m_textures.push_back(texture);

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <assimp/Importer.hpp>
-#include <memory>
 
 #include "Mesh.h"
 #include "Texture.h"
@@ -37,6 +36,10 @@ public:
 	void SetRotation(const vf3& axis);
 	void SetScale(const vf3& scale);
 	void SetAngle(const f32 angle);
+
+	void SetName(std::string name);
+	std::string GetName();
+
 
 	void AddTexture(const std::shared_ptr<Texture>& texture);
 	std::vector<std::shared_ptr<Texture>> GetTextures() const;

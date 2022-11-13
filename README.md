@@ -34,6 +34,7 @@ The design principle applied was to identify rendering engine concepts, and ecap
 - [X] Material
 - [X] Light
 - [X] Scene
+- [X] Scene State Machine
 - [ ] Layer
 - [ ] Text
 
