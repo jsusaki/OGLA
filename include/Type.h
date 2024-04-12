@@ -1,39 +1,37 @@
 #pragma once
 
-// C-Standard Typess
+// C-Standard Types
 #include <cstdint>
+// Numeric types
+using u8 = uint8_t;
+using u16 = uint16_t;
+using u32 = uint32_t;
+using u64 = uint64_t;
+using s8 = int8_t;
+using s16 = int16_t;
+using s32 = int32_t;
+using s64 = int64_t;
+using f32 = float;
+using f64 = double;
+
 // GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
-// Type definitions
-typedef signed char s8;
-typedef unsigned char u8;
-typedef signed short s16;
-typedef unsigned short u16;
-typedef signed int s32;
-typedef unsigned int u32;
-typedef unsigned long long u64;
-typedef signed long long s64;
-typedef float f32;
-typedef double f64;
-
-typedef glm::ivec2 vi2;
-typedef glm::fvec2 vf2;
-typedef glm::dvec2 vd2;
-
-typedef glm::ivec3 vi3;
-typedef glm::fvec3 vf3;
-typedef glm::dvec3 vd3;
-
-typedef glm::ivec4 vi4;
-typedef glm::fvec4 vf4;
-typedef glm::dvec4 vd4;
-
-typedef glm::imat4x4 mi4x4;
-typedef glm::fmat4x4 mf4x4;
-typedef glm::dmat4x4 md4x4;
+// Vector types
+using vi2 = glm::ivec2;
+using vf2 = glm::fvec2;
+using vd2 = glm::dvec2;
+using vi3 = glm::ivec3;
+using vf3 = glm::fvec3;
+using vd3 = glm::dvec3;
+using vi4 = glm::ivec4;
+using vf4 = glm::fvec4;
+using vd4 = glm::dvec4;
+// Matrix types
+using mi4x4 = glm::imat4x4;
+using mf4x4 = glm::fmat4x4;
+using md4x4 = glm::dmat4x4;
 
 // float 32-bit Color 
 struct color

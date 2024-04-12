@@ -2,38 +2,43 @@
 	OGLA: OpenGL Abstraction
 	
 	OpenGL Renderer	
-		Render Context
-			Core
-				Window Abstraction
-				Event Abstraction
-				Input Abstraction
-					Keyboard Input
-					Mouse Input
-			Vertex Abstraction
-			Vertex Buffer Abstraction
-			Index Buffer Abstraction
-			Vertex Array Abstraction
-			Vertex Data Abstraction
-			Shader Abstraction
-			Texture Abstraction
-			Mesh Abstraction
-				Triangle
-				Quad (Plane)
-				Cube
-			Model Abstration
-			Camera Abstraction
-				Orthographic Projection
-				Perspective Projection
-			Material Abstraction
-				PBR material
-			Light Abstraction
-				Phong Lighting
-				Binn-Phong Lighting
-    		Scene Abstraction
-    		State Machine Abstraction
+		Core
+			Window Abstraction
+			Event Abstraction
+			Input Abstraction
+				Keyboard Input
+				Mouse Input
+		Vertex Abstraction
+		Vertex Buffer Abstraction
+		Index Buffer Abstraction
+		Vertex Array Abstraction
+		Vertex Data Abstraction
+		Shader Abstraction
+		Texture Abstraction
+		Mesh Abstraction
+			Triangle
+			Quad (Plane)
+			Cube
+		Model Abstration
+		Camera Abstraction
+			Orthographic Camera
+			Perspective Camera
+			Orbit Camera
+
+		Material Abstraction
+			PBR material
+		Light Abstraction
+			Phong Lighting
+			Binn-Phong Lighting
+		Scene Abstraction
+		Scene State Machine Abstraction
 
 	TODO:
-		Asset Import
+		Asset Import: assimp
+		Logging System
+			Shader
+			Texture
+			Model
 		Layer Abstraction
 		Shadow Abstraction
 
@@ -55,6 +60,7 @@
 			Open.GL: https://open.gl/
 			OOGL: https://github.com/Overv/OOGL
 			songho: http://www.songho.ca/opengl/index.html
+			grid: https://asliceofrendering.com/scene%20helper/2020/01/05/InfiniteGrid/
 */
 #include "Engine.h"
 

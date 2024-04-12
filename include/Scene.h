@@ -21,8 +21,8 @@ public:
 	virtual void OnCreate() {};
 	virtual void OnActivate() {};
 	virtual void OnDeactivate() {};
-	virtual void OnProcessInput(f32 fElapsedTime) {};
-	virtual void OnUpdate(f32 fElapsedTime) {};
+	virtual void OnProcessInput(f32 elapsed_time) {};
+	virtual void OnUpdate(f32 elapsed_time) {};
 	virtual void OnRender() {};
 };
 
@@ -35,8 +35,8 @@ public:
 	void OnCreate() override;
 	void OnActivate() override;
 	void OnDeactivate() override;
-	void OnProcessInput(f32 fElapsedTime) override;
-	void OnUpdate(f32 fElapsedTime) override;
+	void OnProcessInput(f32 elapsed_time) override;
+	void OnUpdate(f32 elapsed_time) override;
 	void OnRender() override;
 private:
 	std::shared_ptr<Window> m_window;
@@ -60,8 +60,8 @@ public:
 	void OnCreate() override;
 	void OnActivate() override;
 	void OnDeactivate() override;
-	void OnProcessInput(f32 fElapsedTime) override;
-	void OnUpdate(f32 fElapsedTime) override;
+	void OnProcessInput(f32 elapsed_time) override;
+	void OnUpdate(f32 elapsed_time) override;
 	void OnRender() override;
 private:
 	std::shared_ptr<Window> m_window;

@@ -17,9 +17,7 @@ void SceneStateMachine::TransitionTo(std::string name)
 	if (it != m_scenes.end())
 	{
 		if (m_current_scene)
-		{
 			m_current_scene->OnDeactivate();
-		}
 
 		m_current_scene_name = name;
 		m_current_scene = it->second;
@@ -34,6 +32,7 @@ void SceneStateMachine::Remove(std::string name)
 	{
 		if (m_current_scene == it->second)
 			m_current_scene = nullptr;
+
 		m_scenes.erase(it);
 	}
 }

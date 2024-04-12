@@ -51,17 +51,16 @@ void Sandbox::OnActivate()
 
 void Sandbox::OnDeactivate()
 {
-
 }
 
-void Sandbox::OnProcessInput(f32 fElapsedTime)
+void Sandbox::OnProcessInput(f32 elapsed_time)
 {
 
 }
 
-void Sandbox::OnUpdate(f32 fElapsedTime)
+void Sandbox::OnUpdate(f32 elapsed_time)
 {
-	acc_timer += fElapsedTime;
+	acc_timer += elapsed_time;
 }
 
 void Sandbox::OnRender()

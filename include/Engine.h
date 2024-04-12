@@ -25,7 +25,7 @@ public:
 	void Render();
 
 private:
-	bool m_bRunning;
+	bool m_running;
 
 	// Core systems
 	std::shared_ptr<Window> m_window;
@@ -36,10 +36,10 @@ private:
 	// Frame time handling
 	std::chrono::time_point<std::chrono::system_clock> m_t1;
 	std::chrono::time_point<std::chrono::system_clock> m_t2;
-	u32 nLastFPS;
-	u32 nFrameCount;
-	f32 fFrameTimer;
-	f32 fAccumulator;
-	f32 fDeltaTime;
-	f32 fLastElapsedTime;
+	u32 m_last_fps;
+	u32 m_frame_count;
+	f32 m_frame_timer;
+	f32 m_accumulator;
+	f32 m_delta_time;
+	f32 m_last_elapsed_time;
 };

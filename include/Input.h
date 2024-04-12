@@ -52,8 +52,6 @@ public:
 	u8 GetKeyMap(s32 k);
 	// Mouse 
 	KeyState GetMouse(s32 b);
-	s32 GetMouseX();
-	s32 GetMouseY();
 	const vd2& GetMousePos();
 	const vd2& GetMouseDelta();
 	s32 GetMouseWheel();
@@ -71,8 +69,15 @@ public:
 	void UpdateMouseDelta(f64 dx, f64 dy);
 	void UpdateMouseWheel(s32 delta);
 	void UpdateMouseButton();
+	// Callbacks
+	void GLFW_SetKeyboardCallback();
+	void GLFW_SetMouseCursorCallback();
+	void GLFW_SetMouseButtonCallback();
+	void GLFW_SetMouseScrollCallBack();
 
 private:
+	GLFWwindow* m_window;
+
 	// Key code state map
 	std::map<size_t, u8> m_keys;
 	// Keyboard State
@@ -83,13 +88,12 @@ private:
 	std::array<bool, 5> m_MouseNewState;
 	std::array<bool, 5> m_MouseOldState;
 	std::array<KeyState, 5> m_MouseState;
-
-	bool bHasInputFocus;
-	bool bHasMouseFocus;
-	vd2	m_vMousePos;
-	vd2	m_vMousePosCache;
-	vd2	m_vMouseDelta;
-	vd2 m_vMouseWindowPos;
-	s32 m_nMouseWheelDelta;
-	s32 m_nMouseWheelDeltaCache;
+	bool m_HasInputFocus;
+	bool m_HasMouseFocus;
+	vd2	m_MousePos;
+	vd2	m_MousePosCache;
+	vd2	m_MouseDelta;
+	vd2 m_MouseWindowPos;
+	s32 m_MouseWheelDelta;
+	s32 m_MouseWheelDeltaCache;
 };

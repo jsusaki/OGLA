@@ -190,14 +190,6 @@ void Window::SetRenderMode(RenderMode mode)
     }
 }
 
-void Window::GLFW_SetInputCallback(std::shared_ptr<Input> input)
-{
-    GLFW_SetKeyboardCallback(input);
-    GLFW_SetMouseCursorCallback(input);
-    GLFW_SetMouseButtonCallback(input);
-    GLFW_SetMouseScrollCallBack(input);
-}
-
 void Window::GLFW_Init()
 {
     if (!glfwInit())
@@ -248,83 +240,5 @@ void Window::GLFW_SetFrameBufferSizeCallback()
         p->m_size.x = width;
         p->m_size.y = height;
         glViewport(0, 0, width, height);
-    });
-}
-
-void Window::GLFW_SetKeyboardCallback(std::shared_ptr<Input> input)
-{
-   glfwSetWindowUserPointer(m_window, input.get());
-    glfwSetKeyCallback(m_window, [](GLFWwindow* window, s32 key, s32 scancode, s32 action, s32 mode)
-    {
-        if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-            glfwSetWindowShouldClose(window, false);
-
-        Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
-        switch (action)
-        {
-            case GLFW_PRESS:
-            {
-                input->UpdateKeyState(input->GetKeyMap(key), true);
-                break;
-            }
-            case GLFW_RELEASE:
-            {
-                input->UpdateKeyState(input->GetKeyMap(key), false);
-                break;
-            }
-        }
-    });
-}
-
-void Window::GLFW_SetMouseCursorCallback(std::shared_ptr<Input> input)
-{
-    glfwSetWindowUserPointer(m_window, input.get());
-    glfwSetCursorPosCallback(m_window, [](GLFWwindow* window, f64 dx, f64 dy)
-    {
-        Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
-        input->UpdateMouseDelta(dx, dy);
-        input->UpdateMousePos(dx, dy);
-    });
-}
-
-void Window::GLFW_SetMouseButtonCallback(std::shared_ptr<Input> input)
-{
-    glfwSetWindowUserPointer(m_window, input.get());
-    glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, s32 button, s32 action, s32 mode)
-    {
-        Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
-        switch (action)
-        {
-            case GLFW_PRESS:
-            {
-                input->UpdateMouseButtonState(button, true);
-                break;
-            }
-            case GLFW_RELEASE:
-            {
-                input->UpdateMouseButtonState(button, false);
-                break;
-            }
-        }
-    });
-}
-
-void Window::GLFW_SetMouseScrollCallBack(std::shared_ptr<Input> input)
-{
-    glfwSetWindowUserPointer(m_window, input.get());
-    glfwSetScrollCallback(m_window, [](GLFWwindow* window, f64 dx, f64 dy)
-    {
-        Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
-        for (u32 i = 0; i < std::abs(dy); i++)
-        {
-            if (dy > 0)
-            {
-                input->UpdateMouseWheel(-1);
-            }
-            else if (dy < 0)
-            {
-                input->UpdateMouseWheel(1);
-            }
-        }
     });
 }

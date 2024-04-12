@@ -40,7 +40,6 @@ public:
 	void SetName(std::string name);
 	std::string GetName();
 
-
 	void AddTexture(const std::shared_ptr<Texture>& texture);
 	std::vector<std::shared_ptr<Texture>> GetTextures() const;
 	

@@ -28,7 +28,7 @@ public:
 	void Close();
 
 public:
-	// TODO: Separte into Renderer Class
+	// TODO: Separate into Renderer Class
 	void UpdateViewport(const vi2& pos, const vi2& size);
 	void ClearBuffer(pixel p = { 0, 0, 0 }, bool depth = true);
 	void PrepareDrawing(bool depth = true, bool cullface = false);
@@ -53,8 +53,6 @@ public:
 	void GetPrimaryMonitor();
 	RenderMode GetRenderMode();
 	void SetRenderMode(RenderMode mode);
-
-	void GLFW_SetInputCallback(std::shared_ptr<Input> input);
 	
 private:
 	// Internal Configurations
@@ -62,11 +60,6 @@ private:
 	void GLFW_CreateWindow(std::string title, int w, int h, bool fullscreen, bool vsync);
 	void GLAD_Load();
 	void GLFW_SetFrameBufferSizeCallback();
-
-	void GLFW_SetKeyboardCallback(std::shared_ptr<Input> input);
-	void GLFW_SetMouseCursorCallback(std::shared_ptr<Input> input);
-	void GLFW_SetMouseButtonCallback(std::shared_ptr<Input> input);
-	void GLFW_SetMouseScrollCallBack(std::shared_ptr<Input> input);
 
 private:
 	GLFWwindow* m_window;

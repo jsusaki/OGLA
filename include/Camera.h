@@ -14,7 +14,8 @@ enum class Direction
 enum class CameraMode
 {
 	PERSPECTIVE,
-	ORTHOGRAPHIC
+	ORTHOGRAPHIC,
+	ORBIT,
 };
 
 class Camera
@@ -27,16 +28,19 @@ public:
 	mf4x4 GetViewMatrix();
 	mf4x4 GetProjectionMatrix(f32 width, f32 height);
 	vf3 GetPosition();
+	vf3 GetFront();
+	CameraMode GetMode();
 
 	void SetPerspective(f32 fov, f32 aspect, f32 near, f32 far);
 	void SetOrthographic(f32 left, f32 right, f32 top, f32 bottom, f32 near, f32 far);
-	void SetCameraMode(CameraMode mode);
+	void SetMode(CameraMode mode);
+	void UpdateVectors();
 
 	void KeyControl(Direction direction, f32 fElapsedTime);
 	void MouseControl(vf2 mouse_pos);
 	void MouseScrollControl(f32 delta);
-
-	void UpdateVectors();
+	void MousePanControl(vf2 mouse_pos);
+	void MouseOrbitControl(vf2 mouse_pos);
 
 private:
 	CameraMode m_mode;
@@ -51,13 +55,16 @@ private:
 	f32 m_orthographic_scale;
 
 	vf3 m_position;
-	vf3 m_front;
+	vf3 m_front;    
 	vf3 m_up;
 	vf3 m_right;
 	vf3 m_worldUp;
 	f32 m_yaw;
 	f32 m_pitch;
+
 	f32 m_speed;
 	f32 m_sensitivity;
 	vf2 m_mouse_prev;
+	vf3 m_target;
+	f32 m_distance;
 };
