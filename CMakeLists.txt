@@ -14,14 +14,14 @@ add_subdirectory(lib/assimp)
 if (MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
 else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -std=c++2a")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -std=c++20")
     if (NOT WIN32)
         set(GLAD_LIBRARIES dl)
     endif()
 endif()
 
 include_directories(
-    ./include
+    src/
     lib/glad/include/
     lib/glfw/include/
     lib/assimp/include/
@@ -30,8 +30,8 @@ include_directories(
 )
 
 file(GLOB LIBRARY_SOURCES lib/glad/src/glad.c lib/stb/stb_image.cpp)
-file(GLOB PROJECT_HEADERS include/*.h)
-file(GLOB PROJECT_SOURCES src/*.cpp)
+file(GLOB_RECURSE PROJECT_HEADERS src/*.h)
+file(GLOB_RECURSE PROJECT_SOURCES src/*.cpp)
 file(GLOB PROJECT_SHADERS res/shaders/*.fs res/shaders/*.vs)
 
 file(GLOB PROJECT_CONFIGS 
@@ -41,7 +41,6 @@ file(GLOB PROJECT_CONFIGS
     .gitmodules
 )
 
-source_group("include" FILES ${PROJECT_HEADERS})
 source_group("res/shaders" FILES ${PROJECT_SHADERS})
 source_group("lib" FILES ${LIBRARY_SOURCES})
 source_group("src" FILES ${PROJECT_SOURCES})

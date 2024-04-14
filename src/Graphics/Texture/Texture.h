@@ -2,10 +2,10 @@
 #include <iostream>
 #include <string>
 
-#include <stb/stb_image.h>
+#include <stb_image.h>
 #include <glad/glad.h>
 
-#include "Type.h"
+#include "../../Core/Common.h"
 
 // review these formats
 enum Format

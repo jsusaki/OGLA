@@ -3,49 +3,50 @@
 	
 	OpenGL Renderer	
 		Core
-			Window Abstraction
-			Event Abstraction
-			Input Abstraction
+			Window
+			Event
+			Input
 				Keyboard Input
 				Mouse Input
-		Vertex Abstraction
-		Vertex Buffer Abstraction
-		Index Buffer Abstraction
-		Vertex Array Abstraction
-		Vertex Data Abstraction
-		Shader Abstraction
-		Texture Abstraction
-		Mesh Abstraction
-			Triangle
-			Quad (Plane)
-			Cube
-		Model Abstration
-		Camera Abstraction
-			Orthographic Camera
-			Perspective Camera
-			Orbit Camera
-
-		Material Abstraction
-			PBR material
-		Light Abstraction
-			Phong Lighting
-			Binn-Phong Lighting
-		Scene Abstraction
-		Scene State Machine Abstraction
+		Graphics
+			Vertex
+			Vertex Buffer
+			Index Buffer
+			Vertex Data 
+			Shader
+			Texture
+			Mesh
+				Triangle
+				Quad (Plane)
+				Cube
+			Model
+			Camera
+				Orthographic Camera
+				Perspective Camera
+				Orbit Camera
+			Material
+				PBR material
+			Light
+				Phong Lighting
+				Binn-Phong Lighting
+		Scene
+		Scene State Machine
 
 	TODO:
+		Add Namespace OGLA
+		Separate Application Layer
+		GUI: ImGui
 		Asset Import: assimp
 		Logging System
 			Shader
 			Texture
 			Model
-		Layer Abstraction
-		Shadow Abstraction
+		Layer
+		Shadow
 
-		Voxel Rendering
 		Voxel Rendering Framework
 
-	Useful Resources:
+	Useful Resources: 
 		Voxel Engine
 			Voxel Engine Tutorial: https://sites.google.com/site/letsmakeavoxelengine/
 			Minecraft-Like Engines: https://0fps.net/2012/01/14/an-analysis-of-minecraft-like-engines/
@@ -62,12 +63,114 @@
 			songho: http://www.songho.ca/opengl/index.html
 			grid: https://asliceofrendering.com/scene%20helper/2020/01/05/InfiniteGrid/
 */
-#include "Engine.h"
+#include "Core/Engine.h"
+
+//TODO: Move to Examples/
+#include "Scenes/SandboxScene.h"
+#include "Scenes/CubeScene.h"
+
+class Application : public Engine
+{
+public:
+	Application() 
+	{
+	
+	}
+
+public:
+	bool OnCreate() override
+	{
+		// Create Camera
+		m_camera = std::make_shared<Camera>(vf3{ 0.0f, 0.0f, 3.0f });
+
+		// Create Scene
+		std::shared_ptr<Scene> sandbox = std::make_shared<Sandbox>(m_window, m_input, m_camera);
+		m_scene_state->Add("sandbox", sandbox);
+
+		std::shared_ptr<Scene> cube_scene = std::make_shared<CubeScene>(m_window, m_input, m_camera);
+		m_scene_state->Add("cube_scene", cube_scene);
+
+		// Set Active Scene
+		m_scene_state->TransitionTo("sandbox");
+
+		return true;
+	}
+
+	bool OnUpdate(f32 elapsed_time) override
+	{
+		// Application Control
+		if (m_input->GetKey(Key::ESCAPE).pressed) m_window->Close();
+		if (m_input->GetKey(Key::TAB).pressed)    m_window->ToggleMouseFocus();
+		if (m_input->GetKey(Key::F11).pressed)    m_window->ToggleFullScreen();
+		// Rendering Mode Control
+		if (m_input->GetKey(Key::K1).pressed)	  m_window->SetRenderMode(RenderMode::NORMAL);
+		if (m_input->GetKey(Key::K2).pressed)	  m_window->SetRenderMode(RenderMode::WIREFRAME);
+		// Camera Mode Control
+		if (m_input->GetKey(Key::F1).pressed) m_camera->SetMode(CameraMode::PERSPECTIVE);
+		if (m_input->GetKey(Key::F2).pressed) m_camera->SetMode(CameraMode::ORTHOGRAPHIC);
+		if (m_input->GetKey(Key::F3).pressed) m_camera->SetMode(CameraMode::ORBIT);
+		// Camera Key Control
+		if (m_camera->GetMode() == CameraMode::PERSPECTIVE)
+		{
+			if (m_input->GetKey(Key::W).held) m_camera->KeyControl(Direction::FORWARD, elapsed_time);
+			if (m_input->GetKey(Key::S).held) m_camera->KeyControl(Direction::BACKWARD, elapsed_time);
+			if (m_input->GetKey(Key::A).held) m_camera->KeyControl(Direction::LEFT, elapsed_time);
+			if (m_input->GetKey(Key::D).held) m_camera->KeyControl(Direction::RIGHT, elapsed_time);
+			if (m_input->GetKey(Key::Q).held) m_camera->KeyControl(Direction::DOWN, elapsed_time);
+			if (m_input->GetKey(Key::E).held) m_camera->KeyControl(Direction::UP, elapsed_time);
+
+			m_camera->MouseControl(m_input->GetMousePos());
+			m_camera->MousePanControl(m_input->GetMousePos());
+		}
+		// TODO: Make Orbit Camera Control More Intuitive
+		else if (m_camera->GetMode() == CameraMode::ORBIT)
+		{
+			if (m_input->GetMouse(0).held)
+				m_camera->MouseOrbitControl(m_input->GetMousePos()); // Jumping position when go back to perspective; store position?
+			if (m_input->GetMouse(1).held)
+				m_camera->MousePanControl(m_input->GetMousePos());
+		}
+		else if (m_camera->GetMode() == CameraMode::ORTHOGRAPHIC)
+		{
+			if (m_input->GetMouse(0).held)
+				m_camera->MouseOrbitControl(m_input->GetMousePos());
+			if (m_input->GetMouse(1).held)
+				m_camera->MousePanControl(m_input->GetMousePos());
+		}
+		// Camera Mouse Control
+		m_camera->MouseScrollControl(m_input->GetMouseWheel());
+
+		// DEBUG
+		//std::println("Mouse Pos: {}, {}", m_input->GetMousePos().x, m_input->GetMousePos().y);
+		//std::println("Mouse Delta: {}, {}", m_input->GetMouseDelta().x, m_input->GetMouseDelta().y);
+		//std::println("Camera Pos: {}, {}, {}", m_camera->GetPosition().x, m_camera->GetPosition().y, m_camera->GetPosition().z);
+
+		// Scene Control
+		if (m_input->GetKey(Key::NP1).pressed)
+		{
+			m_scene_state->TransitionTo("sandbox");
+			std::cout << "Sandbox Scene" << std::endl;
+            //std::println("Sandbox Scene");
+		}
+		if (m_input->GetKey(Key::NP2).pressed)
+		{
+			m_scene_state->TransitionTo("cube_scene");
+            std::cout << "Cube Scene" << std::endl;
+            //std::println("CubeScene");
+		}
+
+		return true;
+	}
+
+private:
+	std::shared_ptr<Camera> m_camera;
+};
+
 
 int main()
 {
-	Engine engine;
-	if (engine.Init("OGLA: OpenGL Abstraction", 800, 600))
-		engine.Start();
+	Application app;
+	if (app.Init("OGLA: OpenGL Abstraction", 800, 600))
+		app.Start();
 	return 0;
 }

@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 #include <vector>
 
-#include "Type.h"
+#include "../../Core/Common.h"
 #include "Vertex.h"
 
 

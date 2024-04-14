@@ -2,8 +2,9 @@
 
 #include <memory>
 #include <map>
+#include <string>
 
-#include "Type.h"
+#include "../Common.h"
 #include "Scene.h"
 
 

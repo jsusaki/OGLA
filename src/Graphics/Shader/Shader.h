@@ -21,7 +21,7 @@
 
 #include <glad/glad.h>
 
-#include "Type.h"
+#include "../../Core/Common.h"
 
 
 enum ShaderType

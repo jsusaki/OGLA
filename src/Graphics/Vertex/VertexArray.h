@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-#include "Type.h"
+#include "../../Core/Common.h"
 #include "VertexData.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"

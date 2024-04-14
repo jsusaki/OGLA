@@ -60,7 +60,7 @@ void Input::HandleEvent()
 	glfwPollEvents();
 	UpdateKeyboard();
 	UpdateMouseButton();
-	// store to remain consistent between frames
+	// cache to remain consistent between frames
 	m_MousePos = m_MousePosCache;
 	m_MouseWheelDelta = m_MouseWheelDeltaCache;
 	m_MouseWheelDeltaCache = 0;

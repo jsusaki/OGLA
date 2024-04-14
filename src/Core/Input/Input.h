@@ -7,7 +7,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "Type.h"
+#include "../Common.h"
 
 enum Key
 {
@@ -27,16 +27,16 @@ enum Key
 
 namespace Mouse
 {
-	constexpr s32 LEFT = 0;
-	constexpr s32 RIGHT = 1;
+	constexpr s32 LEFT   = 0;
+	constexpr s32 RIGHT  = 1;
 	constexpr s32 MIDDLE = 2;
 }
 
 struct KeyState
 {
 	bool released = false;
-	bool pressed = false;
-	bool held = false;
+	bool pressed  = false;
+	bool held     = false;
 };
 
 class Input

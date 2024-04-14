@@ -1,5 +1,5 @@
 #pragma once
-#include "Type.h"
+#include "../../Core/Common.h"
 
 enum class Direction
 {

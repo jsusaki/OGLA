@@ -1,7 +1,8 @@
 #pragma once
+#include <memory>
 
-#include "Type.h"
-#include "Shader.h"
+#include "../../Core/Common.h"
+#include "../Shader/Shader.h"
 
 class Material
 {

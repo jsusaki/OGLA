@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Type.h"
+#include "../../Core/Common.h"
+
 
 struct Vertex 
 {

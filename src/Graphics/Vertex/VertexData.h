@@ -7,7 +7,7 @@
 #include <glad/glad.h>
 #include <vector>
 
-#include "Type.h"
+#include "../../Core/Common.h"
 #include "Vertex.h"
 
 // Do we need all this types?
@@ -50,6 +50,7 @@ private:
 	u32 m_stride = 0;
 };
 
+// TODO: Redesign
 // template specializations
 template<>
 inline void VertexData::Add<vf2>()

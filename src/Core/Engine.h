@@ -3,10 +3,13 @@
 #include <iostream>
 #include <chrono>
 #include <memory>
+#include <format>
+#include <string>
+//#include <print> // only C++23 supports
 
-#include "Window.h"
-#include "Input.h"
-#include "SceneStateMachine.h"
+#include "../Core/Window/Window.h"
+#include "../Core/Input/Input.h"
+#include "../Core/Scene/SceneStateMachine.h"
 
 
 class Engine
@@ -24,13 +27,16 @@ public:
 	void Update(f32 fElapsedTime);
 	void Render();
 
-private:
+public: // Derive and override these functions
+	virtual bool OnCreate() = 0;
+	virtual bool OnUpdate(f32 elapsed_time) = 0;
+
+protected:
 	bool m_running;
 
 	// Core systems
 	std::shared_ptr<Window> m_window;
 	std::shared_ptr<Input> m_input;
-	std::shared_ptr<Camera> m_camera;
 	std::unique_ptr<SceneStateMachine> m_scene_state;
 
 	// Frame time handling

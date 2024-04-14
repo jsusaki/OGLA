@@ -2,12 +2,12 @@
 #include <vector>
 #include <memory>
 
-#include "Vertex.h"
-#include "VertexData.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "VertexArray.h"
-#include "Shader.h"
+#include "../Vertex/Vertex.h"
+#include "../Vertex/VertexData.h"
+#include "../Vertex/VertexBuffer.h"
+#include "../Vertex/IndexBuffer.h"
+#include "../Vertex/VertexArray.h"
+#include "../Shader/Shader.h"
 
 class Mesh
 {

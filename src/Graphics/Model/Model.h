@@ -1,10 +1,11 @@
 #pragma once
 
+// TODO: Implement Assimp model loading
 #include <assimp/Importer.hpp>
 
-#include "Mesh.h"
-#include "Texture.h"
-#include "Material.h"
+#include "../Mesh/Mesh.h"
+#include "../Texture/Texture.h"
+#include "../Material/Material.h"
 
 
 class Model
@@ -28,17 +29,15 @@ public:
 	mf4x4 GetModelMatrix() const;
 	std::vector<Mesh> GetMeshes() const;
 	vf3 GetPosition() const;
-	vf3 GetRotation() const;
-	vf3 GetScale() const;
-	f32 GetAngle() const;
-
 	void SetPosition(const vf3& pos);
+	vf3 GetRotation() const;
 	void SetRotation(const vf3& axis);
+	vf3 GetScale() const;
 	void SetScale(const vf3& scale);
+	f32 GetAngle() const;
 	void SetAngle(const f32 angle);
-
-	void SetName(std::string name);
 	std::string GetName();
+	void SetName(std::string name);
 
 	void AddTexture(const std::shared_ptr<Texture>& texture);
 	std::vector<std::shared_ptr<Texture>> GetTextures() const;
@@ -53,7 +52,7 @@ private:
 	std::vector<std::shared_ptr<Material>> m_materials;
 	mf4x4 m_model;
 
-	// Transform POD?
+	// Transform into POD?
 	vf3 m_position;
 	vf3 m_rotation;
 	vf3 m_scale;
