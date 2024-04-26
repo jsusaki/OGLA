@@ -50,8 +50,7 @@ private:
 	u32 m_stride = 0;
 };
 
-// TODO: Redesign
-// template specializations
+// Template specializations
 template<>
 inline void VertexData::Add<vf2>()
 {

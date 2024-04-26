@@ -1,7 +1,12 @@
 #pragma once
 
-// TODO: Implement Assimp model loading
+#include <vector>
+#include <memory>
+#include <string>
+
 #include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 #include "../Mesh/Mesh.h"
 #include "../Texture/Texture.h"
@@ -12,13 +17,14 @@ class Model
 {
 public:
 	Model();
-	Model(std::vector<Vertex>& vertices, std::vector<u32>& indices, VertexData& def);
+	Model(std::vector<Vertex>& vertices, std::vector<u32>& indices);
+	//Model(std::vector<Vertex>& vertices, std::vector<u32>& indices, std::shared_ptr<Material> material);
+	Model(std::vector<Vertex>& vertices, std::vector<u32>& indices, std::vector<std::shared_ptr<Texture>> texture);
 	Model(Mesh& mesh);
-	~Model();
+	Model(const std::string& path);
 
 public:
 	void Draw(std::shared_ptr<Shader> shader);
-	void Clear();
 
 public:
 	void Scale(const vf3& scale);
@@ -41,18 +47,23 @@ public:
 
 	void AddTexture(const std::shared_ptr<Texture>& texture);
 	std::vector<std::shared_ptr<Texture>> GetTextures() const;
-	
-	void AddMaterial(const std::shared_ptr<Material>& material);
-	std::vector<std::shared_ptr<Material>> GetMaterials() const;
+
+public: // Assimp model loading
+	void LoadModel(const std::string& path);
+	void ProcessNode(aiNode* node, const aiScene* scene);
+	void ProcessMesh(aiMesh* mesh, const aiScene* scene);
+	std::vector<Vertex> ProcessVertices(aiMesh* mesh, const aiScene* scene);
+	std::vector<u32> ProcessIndices(aiMesh* mesh);
+	std::vector<std::shared_ptr<Texture>> ProcessMaterials(aiMesh* mesh, const aiScene* scene);
+	std::vector<std::shared_ptr<Texture>> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 
 private:
 	std::string m_name;
+	std::string m_directory;
 	std::vector<Mesh> m_meshes;
 	std::vector<std::shared_ptr<Texture>> m_textures;
-	std::vector<std::shared_ptr<Material>> m_materials;
 	mf4x4 m_model;
 
-	// Transform into POD?
 	vf3 m_position;
 	vf3 m_rotation;
 	vf3 m_scale;

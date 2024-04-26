@@ -5,8 +5,8 @@ Camera::Camera()
 	m_view = mf4x4(1.0f);
 	m_projection = mf4x4(1.0f);
 
-	m_near = 0.1f;
-	m_far = 1000.0f;
+	m_near = 1.0f;
+	m_far = 100.0f;
 	m_FOV = 45.0f;
 	m_aspect_ratio = 0.0f;
 	m_orthographic_scale = 40.0f;
@@ -216,10 +216,10 @@ void Camera::MouseOrbitControl(vf2 mouse_pos)
 
 	m_mouse_prev = mouse_pos;
 
-	m_yaw += delta.x * 0.1f;
+	m_yaw   += delta.x * 0.1f;
 	m_pitch += delta.y * 0.1f;
 
-	if (m_pitch > 89.0f)  m_pitch = 89.0f;
+	if (m_pitch >  89.0f) m_pitch =  89.0f;
 	if (m_pitch < -89.0f) m_pitch = -89.0f;
 
 	// convert screen space 2d coordinate to world space 3d coordinate?
@@ -227,7 +227,7 @@ void Camera::MouseOrbitControl(vf2 mouse_pos)
 	//vf3 rayMouse = glm::normalize(worldPos - m_position);
 	//m_target = m_position - rayMouse;
 	
-	m_target = m_position - m_front * m_distance;
+	m_target   = m_position - m_front * m_distance;
 	m_position = glm::normalize(m_target);
 	
 	UpdateVectors();
@@ -238,8 +238,8 @@ void Camera::UpdateVectors()
 	m_front.x = std::cos(glm::radians(m_yaw)) * std::cos(glm::radians(m_pitch));
 	m_front.y = std::sin(glm::radians(m_pitch));
 	m_front.z = std::sin(glm::radians(m_yaw)) * std::cos(glm::radians(m_pitch));
-	m_front = glm::normalize(m_front);
+	m_front   = glm::normalize(m_front);
 
-	m_right = glm::normalize(glm::cross(m_front, m_worldUp));
-	m_up = glm::normalize(glm::cross(m_right, m_front));
+	m_right   = glm::normalize(glm::cross(m_front, m_worldUp));
+	m_up      = glm::normalize(glm::cross(m_right, m_front));
 }

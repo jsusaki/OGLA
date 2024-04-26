@@ -21,21 +21,20 @@ Input::Input()
 	m_keys[GLFW_KEY_0] = Key::K0; m_keys[GLFW_KEY_1] = Key::K1; m_keys[GLFW_KEY_2] = Key::K2; m_keys[GLFW_KEY_3] = Key::K3; m_keys[GLFW_KEY_4] = Key::K4;
 	m_keys[GLFW_KEY_5] = Key::K5; m_keys[GLFW_KEY_6] = Key::K6; m_keys[GLFW_KEY_7] = Key::K7; m_keys[GLFW_KEY_8] = Key::K8; m_keys[GLFW_KEY_9] = Key::K9;
 
-	m_keys[GLFW_KEY_F1] = Key::F1; m_keys[GLFW_KEY_F2] = Key::F2; m_keys[GLFW_KEY_F3] = Key::F3; m_keys[GLFW_KEY_F4] = Key::F4; 
-	m_keys[GLFW_KEY_F5] = Key::F5; m_keys[GLFW_KEY_F6] = Key::F6; m_keys[GLFW_KEY_F7] = Key::F7; m_keys[GLFW_KEY_F8] = Key::F8; 
+	m_keys[GLFW_KEY_F1] = Key::F1; m_keys[GLFW_KEY_F2]  = Key::F2; m_keys[GLFW_KEY_F3]   = Key::F3; m_keys[GLFW_KEY_F4]   = Key::F4; 
+	m_keys[GLFW_KEY_F5] = Key::F5; m_keys[GLFW_KEY_F6]  = Key::F6; m_keys[GLFW_KEY_F7]   = Key::F7; m_keys[GLFW_KEY_F8]   = Key::F8; 
 	m_keys[GLFW_KEY_F9] = Key::F9; m_keys[GLFW_KEY_F10] = Key::F10; m_keys[GLFW_KEY_F11] = Key::F11; m_keys[GLFW_KEY_F12] = Key::F12;
 
 	m_keys[GLFW_KEY_RIGHT] = Key::RIGHT; m_keys[GLFW_KEY_LEFT] = Key::LEFT; m_keys[GLFW_KEY_DOWN] = Key::DOWN; m_keys[GLFW_KEY_UP] = Key::UP;
 
-	m_keys[GLFW_KEY_SPACE] = Key::SPACE; m_keys[GLFW_KEY_TAB] = Key::TAB;  m_keys[GLFW_KEY_LEFT_SHIFT] = Key::SHIFT; m_keys[GLFW_KEY_LEFT_CONTROL] = Key::CTRL; m_keys[GLFW_KEY_INSERT] = Key::INS;
-	m_keys[GLFW_KEY_BACKSPACE] = Key::BACK; m_keys[GLFW_KEY_ESCAPE] = Key::ESCAPE; m_keys[GLFW_KEY_ENTER] = Key::ENTER;  m_keys[GLFW_KEY_PAUSE] = Key::PAUSE; m_keys[GLFW_KEY_SCROLL_LOCK] = Key::SCROLL;
-	m_keys[GLFW_KEY_DELETE] = Key::DEL; m_keys[GLFW_KEY_HOME] = Key::HOME; m_keys[GLFW_KEY_END] = Key::END; m_keys[GLFW_KEY_PAGE_UP] = Key::PGUP; m_keys[GLFW_KEY_PAGE_DOWN] = Key::PGDN;
-	m_keys[GLFW_KEY_EQUAL] = Key::EQUAL; m_keys[GLFW_KEY_COMMA] = Key::COMMA; m_keys[GLFW_KEY_MINUS] = Key::MINUS; m_keys[GLFW_KEY_KP_DECIMAL] = Key::NP_DECIMAL; m_keys[GLFW_KEY_PERIOD] = Key::PERIOD;
+	m_keys[GLFW_KEY_SPACE]     = Key::SPACE; m_keys[GLFW_KEY_TAB]    = Key::TAB;    m_keys[GLFW_KEY_LEFT_SHIFT] = Key::SHIFT;  m_keys[GLFW_KEY_LEFT_CONTROL] = Key::CTRL;		m_keys[GLFW_KEY_INSERT]		 = Key::INS;
+	m_keys[GLFW_KEY_BACKSPACE] = Key::BACK;  m_keys[GLFW_KEY_ESCAPE] = Key::ESC; m_keys[GLFW_KEY_ENTER]      = Key::ENTER;  m_keys[GLFW_KEY_PAUSE]        = Key::PAUSE;		m_keys[GLFW_KEY_SCROLL_LOCK] = Key::SCROLL;
+	m_keys[GLFW_KEY_DELETE]    = Key::DEL;   m_keys[GLFW_KEY_HOME]   = Key::HOME;   m_keys[GLFW_KEY_END]        = Key::END;    m_keys[GLFW_KEY_PAGE_UP]      = Key::PGUP;       m_keys[GLFW_KEY_PAGE_DOWN]	 = Key::PGDN;
+	m_keys[GLFW_KEY_EQUAL]     = Key::EQUAL; m_keys[GLFW_KEY_COMMA]  = Key::COMMA;  m_keys[GLFW_KEY_MINUS]      = Key::MINUS;  m_keys[GLFW_KEY_KP_DECIMAL]   = Key::NP_DECIMAL; m_keys[GLFW_KEY_PERIOD]		 = Key::PERIOD;
 
 	m_keys[GLFW_KEY_KP_0] = Key::NP0; m_keys[GLFW_KEY_KP_1] = Key::NP1; m_keys[GLFW_KEY_KP_2] = Key::NP2; m_keys[GLFW_KEY_KP_3] = Key::NP3; m_keys[GLFW_KEY_KP_4] = Key::NP4;
 	m_keys[GLFW_KEY_KP_5] = Key::NP5; m_keys[GLFW_KEY_KP_6] = Key::NP6; m_keys[GLFW_KEY_KP_7] = Key::NP7; m_keys[GLFW_KEY_KP_8] = Key::NP8; m_keys[GLFW_KEY_KP_9] = Key::NP9;
-	m_keys[GLFW_KEY_KP_MULTIPLY] = Key::NP_MUL;  m_keys[GLFW_KEY_KP_DIVIDE] = Key::NP_DIV; m_keys[GLFW_KEY_KP_SUBTRACT] = Key::NP_SUB; m_keys[GLFW_KEY_KP_ADD] = Key::NP_ADD;
-
+	m_keys[GLFW_KEY_KP_MULTIPLY] = Key::NP_MUL; m_keys[GLFW_KEY_KP_DIVIDE] = Key::NP_DIV; m_keys[GLFW_KEY_KP_SUBTRACT] = Key::NP_SUB; m_keys[GLFW_KEY_KP_ADD] = Key::NP_ADD;
 	m_keys[GLFW_KEY_CAPS_LOCK] = Key::CAPS_LOCK;
 
 	m_HasInputFocus = false;
@@ -97,7 +96,6 @@ s32 Input::GetMouseWheel()
 {
 	return m_MouseWheelDelta;
 }
-
 
 // Keyboard
 void Input::UpdateKeyState(s32 key, bool state)
@@ -192,7 +190,7 @@ void Input::UpdateKeyFocus(bool state)
 	m_HasInputFocus = state;
 }
 
-
+// GLFW Callbacks
 void Input::GLFW_SetKeyboardCallback()
 {
 	glfwSetWindowUserPointer(m_window, this);
@@ -226,7 +224,7 @@ void Input::GLFW_SetMouseButtonCallback()
 		Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
 		switch (action)
 		{
-		case GLFW_PRESS: input->UpdateMouseButtonState(button, true);    break;
+		case GLFW_PRESS:   input->UpdateMouseButtonState(button, true);    break;
 		case GLFW_RELEASE: input->UpdateMouseButtonState(button, false); break;
 		}
 	});

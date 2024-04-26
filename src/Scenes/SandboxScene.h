@@ -1,6 +1,6 @@
 #pragma once
-#include "../Core/Scene/Scene.h"
 #include "../Core/Common.h"
+#include "../Core/Scene/Scene.h"
 #include "../Core/Window/Window.h"
 #include "../Core/Input/Input.h"
 
@@ -33,6 +33,7 @@ private:
 	std::map<std::string, std::shared_ptr<Shader>> m_shaders;
 	std::map<std::string, std::shared_ptr<Texture>> m_textures;
 	std::vector<std::shared_ptr<Model>> m_models;
-	std::shared_ptr<Light> m_light;
-	std::shared_ptr<Material> m_material;
+	std::shared_ptr<PointLight> m_point_light;
+	std::shared_ptr<DirectionalLight> m_directional_light;
+	std::shared_ptr<SpotLight> m_spot_light;
 };

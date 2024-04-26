@@ -7,7 +7,7 @@ Shader::Shader()
 
 Shader::Shader(const std::string& vertex_path, const std::string& fragment_path)
 {
-    m_ProgramID = glCreateProgram();
+    m_propgram_id = glCreateProgram();
 
     std::string vertexSource = LoadFromFile(vertex_path);
     std::string fragmentSource = LoadFromFile(fragment_path);
@@ -29,12 +29,12 @@ Shader::Shader(const std::string& vertex_path, const std::string& fragment_path)
 
 Shader::~Shader()
 {
-    glDeleteProgram(m_ProgramID);
+    glDeleteProgram(m_propgram_id);
 }
 
 void Shader::Use()
 {
-    glUseProgram(m_ProgramID);
+    glUseProgram(m_propgram_id);
 }
 
 void Shader::Unuse()
@@ -44,7 +44,7 @@ void Shader::Unuse()
 
 u32 Shader::GetID()
 {
-    return m_ProgramID;
+    return m_propgram_id;
 }
 
 std::string Shader::LoadFromFile(const std::string& filepath)
@@ -73,11 +73,11 @@ u32 Shader::Compile(ShaderType type, std::string& source)
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
     if (status == GL_FALSE)
     {
-        s32 nMaxLength = 0;
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &nMaxLength);
+        s32 max_length = 0;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &max_length);
 
-        std::vector<char> vErrorLog(nMaxLength);
-        glGetShaderInfoLog(shader, nMaxLength, &nMaxLength, &vErrorLog[0]);
+        std::vector<char> vErrorLog(max_length);
+        glGetShaderInfoLog(shader, max_length, &max_length, &vErrorLog[0]);
 
         glDeleteShader(shader);
 
@@ -89,32 +89,32 @@ u32 Shader::Compile(ShaderType type, std::string& source)
 
 void Shader::Attach(u32& shader)
 {
-    glAttachShader(m_ProgramID, shader);
+    glAttachShader(m_propgram_id, shader);
 }
 
 void Shader::Link()
 {
-    glLinkProgram(m_ProgramID);
+    glLinkProgram(m_propgram_id);
 
     s32 status = 0;
-    glGetProgramiv(m_ProgramID, GL_LINK_STATUS, &status);
+    glGetProgramiv(m_propgram_id, GL_LINK_STATUS, &status);
     if (status == GL_FALSE)
     {
-        s32 maxLength = 0;
-        glGetProgramiv(m_ProgramID, GL_INFO_LOG_LENGTH, &maxLength);
+        s32 max_length = 0;
+        glGetProgramiv(m_propgram_id, GL_INFO_LOG_LENGTH, &max_length);
        
-        std::vector<char> vErrorLog(maxLength);
-        glGetProgramInfoLog(m_ProgramID, maxLength, &maxLength, &vErrorLog[0]);
+        std::vector<char> error_log(max_length);
+        glGetProgramInfoLog(m_propgram_id, max_length, &max_length, &error_log[0]);
         
-        glDeleteProgram(m_ProgramID);
+        glDeleteProgram(m_propgram_id);
         
-        std::printf("%s\n", &(vErrorLog[0]));
+        std::printf("%s\n", &(error_log[0]));
     }
 }
 
 void Shader::Detach(u32& shader)
 {
-    glDetachShader(m_ProgramID, shader);
+    glDetachShader(m_propgram_id, shader);
 }
 
 void Shader::Delete(u32& shader)
@@ -124,16 +124,16 @@ void Shader::Delete(u32& shader)
 
 u32 Shader::GetAttribute(const std::string& name) const
 {
-    return glGetAttribLocation(m_ProgramID, name.c_str());
+    return glGetAttribLocation(m_propgram_id, name.c_str());
 }
 
 u32 Shader::GetUniform(const std::string& name) const
 {
-    if (m_UniformLocations.find(name) != m_UniformLocations.end())
-        return m_UniformLocations[name];
+    if (m_uniform_locations.find(name) != m_uniform_locations.end())
+        return m_uniform_locations[name];
 
-    u32 location = glGetUniformLocation(m_ProgramID, name.c_str());
-    m_UniformLocations[name] = location;
+    u32 location = glGetUniformLocation(m_propgram_id, name.c_str());
+    m_uniform_locations[name] = location;
     return location;
 }
 

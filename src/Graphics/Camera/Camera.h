@@ -3,7 +3,7 @@
 
 enum class Direction
 {
-	FORWARD,
+	FORWARD = 0,
 	BACKWARD,
 	LEFT,
 	RIGHT,
@@ -13,9 +13,9 @@ enum class Direction
 
 enum class CameraMode
 {
-	PERSPECTIVE,
+	PERSPECTIVE = 0,
 	ORTHOGRAPHIC,
-	ORBIT,
+	ORBIT, // ARC
 };
 
 class Camera

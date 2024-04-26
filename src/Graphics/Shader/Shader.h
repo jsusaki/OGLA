@@ -65,6 +65,6 @@ public:
 	void SetUniform(const std::string& name, const mf4x4& matrix);
 
 private:
-	u32 m_ProgramID;
-	mutable std::unordered_map<std::string, u32> m_UniformLocations;
+	u32 m_propgram_id;
+	mutable std::unordered_map<std::string, u32> m_uniform_locations;
 };

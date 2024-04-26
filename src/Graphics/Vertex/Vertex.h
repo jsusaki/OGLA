@@ -7,7 +7,8 @@ struct Vertex
 {
     vf3 position;
     vf3 normal;
-    vf2 texture;
-    vf3 col;
-    //vf2 uv;
+    vf2 texcoords;
+    vf4 col;
+	vf3 tangent;
+	vf3 bitangent;
 };

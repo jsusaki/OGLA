@@ -28,7 +28,7 @@ bool Engine::Init(std::string title, int w, int h, bool fullscreen, bool vsync)
 	// Create Scene State Machine
 	m_scene_state = std::make_unique<SceneStateMachine>();
 
-	// 
+	// Override
 	OnCreate();
 
 	return true;
@@ -66,9 +66,7 @@ bool Engine::Start()
 		{
 			m_last_fps = m_frame_count;
 			m_frame_timer -= 1.0f;
-			std::string s = std::format("Frame Time: {} FPS: {}", m_elapsed_time, m_frame_count);
-            std::cout << s << std::endl;
-            //std::println("Frame Time: {} FPS: {}", m_elapsed_time, m_frame_count);
+			std::println("Frame Time: {} FPS: {}", m_elapsed_time, m_frame_count);
 			m_frame_count = 0;
 		}
 	}

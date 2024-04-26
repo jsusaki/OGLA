@@ -3,9 +3,7 @@
 #include <iostream>
 #include <chrono>
 #include <memory>
-#include <format>
-#include <string>
-//#include <print> // only C++23 supports
+#include <print>
 
 #include "../Core/Window/Window.h"
 #include "../Core/Input/Input.h"

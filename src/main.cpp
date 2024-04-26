@@ -28,15 +28,17 @@
 				PBR material
 			Light
 				Phong Lighting
-				Binn-Phong Lighting
+				Blinn-Phong Lighting
 		Scene
 		Scene State Machine
+		3D Asset Import: Assimp
 
 	TODO:
+		Refactor std::shared_ptr<> to consider object lifetime for performance optimization
+
 		Add Namespace OGLA
-		Separate Application Layer
 		GUI: ImGui
-		Asset Import: assimp
+
 		Logging System
 			Shader
 			Texture
@@ -68,6 +70,7 @@
 //TODO: Move to Examples/
 #include "Scenes/SandboxScene.h"
 #include "Scenes/CubeScene.h"
+#include "Scenes/SponzaScene.h"
 
 class Application : public Engine
 {
@@ -82,13 +85,20 @@ public:
 	{
 		// Create Camera
 		m_camera = std::make_shared<Camera>(vf3{ 0.0f, 0.0f, 3.0f });
+		// Z-Fighting: set near plane to something like:L 1.0f, 2.0f, 5.0f, or 10.0f
 
 		// Create Scene
+		// TODO: pass engine instead of window, input, camera?
+		// REDESIGN: if we make window and input static, we can access globally
+		// TODO: Scene is being created when we call Add(), it should create when we instantiate
 		std::shared_ptr<Scene> sandbox = std::make_shared<Sandbox>(m_window, m_input, m_camera);
 		m_scene_state->Add("sandbox", sandbox);
 
 		std::shared_ptr<Scene> cube_scene = std::make_shared<CubeScene>(m_window, m_input, m_camera);
 		m_scene_state->Add("cube_scene", cube_scene);
+
+		std::shared_ptr<Scene> sponza_scene = std::make_shared<SponzaScene>(m_window, m_input, m_camera);
+		m_scene_state->Add("sponza_scene", sponza_scene);
 
 		// Set Active Scene
 		m_scene_state->TransitionTo("sandbox");
@@ -99,16 +109,17 @@ public:
 	bool OnUpdate(f32 elapsed_time) override
 	{
 		// Application Control
-		if (m_input->GetKey(Key::ESCAPE).pressed) m_window->Close();
-		if (m_input->GetKey(Key::TAB).pressed)    m_window->ToggleMouseFocus();
-		if (m_input->GetKey(Key::F11).pressed)    m_window->ToggleFullScreen();
+		if (m_input->GetKey(Key::ESC).pressed) m_window->Close();
+		if (m_input->GetKey(Key::TAB).pressed) m_window->ToggleMouseFocus();
+		if (m_input->GetKey(Key::F11).pressed) m_window->ToggleFullScreen();
 		// Rendering Mode Control
-		if (m_input->GetKey(Key::K1).pressed)	  m_window->SetRenderMode(RenderMode::NORMAL);
-		if (m_input->GetKey(Key::K2).pressed)	  m_window->SetRenderMode(RenderMode::WIREFRAME);
+		if (m_input->GetKey(Key::K1).pressed)  m_window->SetRenderMode(RenderMode::NORMAL);
+		if (m_input->GetKey(Key::K2).pressed)  m_window->SetRenderMode(RenderMode::WIREFRAME);
+
 		// Camera Mode Control
-		if (m_input->GetKey(Key::F1).pressed) m_camera->SetMode(CameraMode::PERSPECTIVE);
-		if (m_input->GetKey(Key::F2).pressed) m_camera->SetMode(CameraMode::ORTHOGRAPHIC);
-		if (m_input->GetKey(Key::F3).pressed) m_camera->SetMode(CameraMode::ORBIT);
+		if (m_input->GetKey(Key::F1).pressed)  m_camera->SetMode(CameraMode::PERSPECTIVE);
+		if (m_input->GetKey(Key::F2).pressed)  m_camera->SetMode(CameraMode::ORTHOGRAPHIC);
+		if (m_input->GetKey(Key::F3).pressed)  m_camera->SetMode(CameraMode::ORBIT);
 		// Camera Key Control
 		if (m_camera->GetMode() == CameraMode::PERSPECTIVE)
 		{
@@ -139,7 +150,6 @@ public:
 		}
 		// Camera Mouse Control
 		m_camera->MouseScrollControl(m_input->GetMouseWheel());
-
 		// DEBUG
 		//std::println("Mouse Pos: {}, {}", m_input->GetMousePos().x, m_input->GetMousePos().y);
 		//std::println("Mouse Delta: {}, {}", m_input->GetMouseDelta().x, m_input->GetMouseDelta().y);
@@ -147,17 +157,11 @@ public:
 
 		// Scene Control
 		if (m_input->GetKey(Key::NP1).pressed)
-		{
 			m_scene_state->TransitionTo("sandbox");
-			std::cout << "Sandbox Scene" << std::endl;
-            //std::println("Sandbox Scene");
-		}
 		if (m_input->GetKey(Key::NP2).pressed)
-		{
 			m_scene_state->TransitionTo("cube_scene");
-            std::cout << "Cube Scene" << std::endl;
-            //std::println("CubeScene");
-		}
+		if (m_input->GetKey(Key::NP3).pressed)
+			m_scene_state->TransitionTo("sponza_scene");
 
 		return true;
 	}
@@ -170,7 +174,7 @@ private:
 int main()
 {
 	Application app;
-	if (app.Init("OGLA: OpenGL Abstraction", 800, 600))
+	if (app.Init("OGLA: OpenGL Abstraction", 1280, 720))
 		app.Start();
 	return 0;
 }

@@ -31,6 +31,7 @@ void VertexArray::Bind(const VertexBuffer& vbo, const VertexData& def)
 		glEnableVertexAttribArray(i);
 		glVertexAttribPointer(i, def.GetCount(i), def.GetType(i), GL_FALSE, def.GetStride(), (const void*)def.GetOffset(i));
 	}
+	glBindVertexArray(0);
 }
 
 void VertexArray::Bind(const VertexBuffer& vbo, const IndexBuffer& ibo, const VertexData& def)
@@ -43,4 +44,5 @@ void VertexArray::Bind(const VertexBuffer& vbo, const IndexBuffer& ibo, const Ve
 		glEnableVertexAttribArray(i);
 		glVertexAttribPointer(i, def.GetCount(i), def.GetType(i), GL_FALSE, def.GetStride(), (const void*)def.GetOffset(i));
 	}
+	glBindVertexArray(0);
 }

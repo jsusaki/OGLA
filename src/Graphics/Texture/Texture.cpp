@@ -5,24 +5,31 @@ Texture::Texture()
 {
 
 }
-
+/*
 Texture::Texture(const std::string& filepath, bool vertical_flip)
 {
     m_buffer = LoadFromFile(filepath, vertical_flip);
-
     Create(m_width, m_height, m_buffer);
-
     stbi_image_free(m_buffer);
+}
+*/
+Texture::Texture(const std::string& filepath, const std::string& type, bool vertical_flip)
+{
+	m_type = type;
+    m_filepath = filepath;
+    m_buffer = LoadFromFile(filepath, vertical_flip);
+	Create(m_width, m_height, m_buffer);
+	stbi_image_free(m_buffer);
 }
     
 Texture::~Texture()
 {
-    glDeleteTextures(1, &m_TextureID);
+    glDeleteTextures(1, &m_texture_id);
 }
 
 void Texture::Bind()
 {
-    glBindTexture(GL_TEXTURE_2D, m_TextureID);
+    glBindTexture(GL_TEXTURE_2D, m_texture_id);
 }
 
 void Texture::Unbind()
@@ -32,14 +39,24 @@ void Texture::Unbind()
 
 u32 Texture::GetID()
 {
-    return m_TextureID;
+    return m_texture_id;
+}
+
+std::string Texture::GetType()
+{
+    return m_type;
+}
+
+std::string Texture::GetPath()
+{
+    return m_filepath;
 }
 
 void Texture::Create(u32 width, u32 height, const u8* data, const bool filtered, const bool clamped)
 {    
     // Create Texture
-    glGenTextures(1, &m_TextureID);
-    glBindTexture(GL_TEXTURE_2D, m_TextureID);
+    glGenTextures(1, &m_texture_id);
+    glBindTexture(GL_TEXTURE_2D, m_texture_id);
 
     // Set Image Format
     switch (m_channel)
@@ -69,7 +86,7 @@ void Texture::Create(u32 width, u32 height, const u8* data, const bool filtered,
     // Generate Texture
     glTexImage2D(GL_TEXTURE_2D, 0, m_format, width, height, 0, m_format, GL_UNSIGNED_BYTE, data);
 
-    if (m_bMipMap) glGenerateMipmap(GL_TEXTURE_2D);
+    if (m_mipmap) glGenerateMipmap(GL_TEXTURE_2D);
 
     // Unbind texture
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -84,8 +101,8 @@ u8* Texture::LoadFromFile(const std::string& filepath, bool vertical_flip)
     if (data == nullptr)
         std::cout << "Failed to load texture " << filepath << "\n";
 
-    m_width = w;
-    m_height = h;
+    m_width   = w;
+    m_height  = h;
     m_channel = ch;
 
     return data;

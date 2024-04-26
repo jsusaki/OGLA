@@ -39,7 +39,7 @@ TODO: Insert architecture diagram.
 - [X] Scene
 - [X] Scene State Machine
 - [ ] Layer
-- [ ] Text
+- [ ] Font
 
 ### Installation and Build
 
